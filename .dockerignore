@@ -1,0 +1,5 @@
+.git
+vendor
+*.sqlite
+*.sqlite3
+_*.php

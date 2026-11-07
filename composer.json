@@ -1,0 +1,21 @@
+{
+    "name": "phppdo/phppdo",
+    "description": "Userland PDO for PHP 7.4: ODBC through ext-odbc, MySQL and PostgreSQL through FFI.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.4",
+        "ext-odbc": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpPdo\\": "src/"
+        },
+        "files": [
+            "src/bootstrap.php"
+        ]
+    }
+}
