@@ -464,6 +464,8 @@ final class PgsqlClient
         if ($loaded === null) {
             if ($this->pending && $this->nonBlocking) {
                 $this->einfo->clear();
+            } elseif (!$this->pending && $this->einfo->info()[0] === '00000') {
+                $this->einfo->set('HY000', null, 'no async query result is ready', 'PQgetResult');
             }
             return null;
         }
