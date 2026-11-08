@@ -107,6 +107,10 @@ class PDO
     const MYSQL_ATTR_SSL_VERIFY_SERVER_CERT = 1014;
 
     const PGSQL_ATTR_DISABLE_PREPARES = 1000;
+    /** @internal same value as MYSQL_ATTR_LOCAL_INFILE; pgsql-only in get/setAttribute */
+    const PGSQL_ATTR_AUTOCOMMIT = 1001;
+    /** @internal same value as MYSQL_ATTR_INIT_COMMAND; pgsql-only in getAttribute */
+    const PGSQL_ATTR_TRANSACTION_STATUS = 1002;
     const PGSQL_TRANSACTION_IDLE = 0;
     const PGSQL_TRANSACTION_ACTIVE = 1;
     const PGSQL_TRANSACTION_INTRANS = 2;
@@ -153,6 +157,9 @@ class PDO
     private $timeout = 0;
 
     /** @var int */
+    private $prefetch = 0;
+
+    /** @var int */
     private $cursorLibrary = 0;
 
     /** @var bool */
@@ -195,6 +202,12 @@ class PDO
         if (isset($options[self::ATTR_ERRMODE])) {
             $this->errMode = (int) $options[self::ATTR_ERRMODE];
         }
+        if (isset($options[self::ATTR_PREFETCH])) {
+            $this->prefetch = (int) $options[self::ATTR_PREFETCH];
+        }
+        if (isset($options[self::ATTR_TIMEOUT])) {
+            $this->timeout = (int) $options[self::ATTR_TIMEOUT];
+        }
 
         if ($scheme === 'mysql') {
             if (!MysqlLibrary::available()) {
@@ -208,7 +221,7 @@ class PDO
                 throw new PDOException('could not find driver');
             }
             $this->emulatePrepares = false;
-            $this->driver = PgsqlClient::connect($this->dsnRest, $username, $password, $this->persistent);
+            $this->driver = PgsqlClient::connect($this->dsnRest, $username, $password, $this->persistent, $options);
         } else {
             $this->driver = OdbcClient::connect(
                 $this->dsnRest,
@@ -358,6 +371,7 @@ class PDO
                 }
                 return null;
             case self::ATTR_PREFETCH:
+                return $this->prefetch;
             case self::ATTR_CURSOR_NAME:
                 return null;
             case self::ATTR_CONNECTION_STATUS:
@@ -389,6 +403,12 @@ class PDO
                 }
                 return $this->driver !== null && $this->driver->assumeUtf8();
             default:
+                if ($this->driverName() === 'pgsql' && (int) $attribute === self::PGSQL_ATTR_AUTOCOMMIT) {
+                    return $this->autoCommit;
+                }
+                if ($this->driverName() === 'pgsql' && (int) $attribute === self::PGSQL_ATTR_TRANSACTION_STATUS) {
+                    return $this->driver->transactionStatus();
+                }
                 if ($this->driverName() === 'mysql' && (int) $attribute === self::MYSQL_ATTR_DIRECT_QUERY) {
                     return $this->emulatePrepares;
                 }
@@ -708,6 +728,9 @@ class PDO
                     $this->driver->setTimeout($this->timeout);
                 }
                 return true;
+            case self::ATTR_PREFETCH:
+                $this->prefetch = (int) $value;
+                return true;
             case self::ATTR_STATEMENT_CLASS:
                 $resolved = $this->resolveStatementClass($value);
                 if ($resolved === null) {
@@ -731,6 +754,8 @@ class PDO
                 }
                 return true;
             case self::ODBC_ATTR_USE_CURSOR_LIBRARY:
+            case self::MYSQL_ATTR_USE_BUFFERED_QUERY:
+            case self::PGSQL_ATTR_DISABLE_PREPARES:
                 if ($this->driverName() === 'mysql') {
                     return $this->driver->setMysqlAttribute(self::MYSQL_ATTR_USE_BUFFERED_QUERY, $value);
                 }
@@ -738,6 +763,15 @@ class PDO
                     return $this->driver->setPgsqlAttribute(self::PGSQL_ATTR_DISABLE_PREPARES, $value);
                 }
                 return $this->fail('HY000', 'ODBC_ATTR_USE_CURSOR_LIBRARY can only be set in the constructor');
+            case self::MYSQL_ATTR_LOCAL_INFILE:
+            case self::PGSQL_ATTR_AUTOCOMMIT:
+                if ($this->driverName() === 'pgsql') {
+                    return $this->setAttribute(self::ATTR_AUTOCOMMIT, $value);
+                }
+                if ($this->driverName() !== 'mysql') {
+                    return $this->fail('IM001', 'driver does not support this attribute');
+                }
+                return $this->driver->setMysqlAttribute(self::MYSQL_ATTR_LOCAL_INFILE, $value);
             case self::MYSQL_ATTR_INIT_COMMAND:
             case self::MYSQL_ATTR_COMPRESS:
             case self::MYSQL_ATTR_FOUND_ROWS:
