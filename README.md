@@ -31,6 +31,8 @@ composer require phppdo/phppdo
 
 Composer loads `src/bootstrap.php`. You can require that file yourself instead.
 
+Driver walkthroughs (synchronous and asynchronous queries): [docs/EXAMPLES.md](docs/EXAMPLES.md).
+
 ## Usage
 
 ```php
