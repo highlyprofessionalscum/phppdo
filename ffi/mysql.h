@@ -1,5 +1,10 @@
 #define FFI_SCOPE "PHPPDO_MYSQL"
 
+#define MYSQL_OPT_CONNECT_TIMEOUT 0
+#define MYSQL_OPT_LOCAL_INFILE 8
+#define MARIADB_OPT_SERVER_PUBLIC_KEY 27
+#define MYSQL_OPT_SSL_VERIFY_SERVER_CERT 35
+
 typedef struct st_mysql { int unused; } MYSQL;
 typedef struct st_mysql_res { int unused; } MYSQL_RES;
 typedef struct st_mysql_stmt { int unused; } MYSQL_STMT;
@@ -54,6 +59,7 @@ MYSQL *mysql_real_connect(MYSQL *mysql, const char *host, const char *user, cons
 void mysql_close(MYSQL *mysql);
 int mysql_ping(MYSQL *mysql);
 int mysql_options(MYSQL *mysql, int option, const void *arg);
+int mysql_ssl_set(MYSQL *mysql, const char *key, const char *cert, const char *ca, const char *capath, const char *cipher);
 int mysql_set_character_set(MYSQL *mysql, const char *csname);
 int mysql_real_query(MYSQL *mysql, const char *query, unsigned long length);
 int mysql_send_query(MYSQL *mysql, const char *query, unsigned long length);
@@ -61,6 +67,7 @@ int mysql_read_query_result(MYSQL *mysql);
 int mysql_get_socket(MYSQL *mysql);
 int mysql_select_db(MYSQL *mysql, const char *db);
 MYSQL_RES *mysql_store_result(MYSQL *mysql);
+MYSQL_RES *mysql_use_result(MYSQL *mysql);
 void mysql_free_result(MYSQL_RES *result);
 unsigned int mysql_field_count(MYSQL *mysql);
 unsigned int mysql_num_fields(MYSQL_RES *result);

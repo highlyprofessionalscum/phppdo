@@ -159,6 +159,10 @@ final class MysqlClient
             $flags |= self::CLIENT_IGNORE_SPACE;
             $client->attrs[PDO::MYSQL_ATTR_IGNORE_SPACE] = true;
         }
+        if (array_key_exists(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, $options)) {
+            $client->attrs[PDO::MYSQL_ATTR_USE_BUFFERED_QUERY] = (bool) $options[PDO::MYSQL_ATTR_USE_BUFFERED_QUERY];
+        }
+        self::applyMysqlConnectOptions($ffi, $mysql, $options, $client->attrs);
 
         $connected = $ffi->mysql_real_connect(
             $mysql,
@@ -181,6 +185,16 @@ final class MysqlClient
             $ffi->mysql_close($mysql);
             $client->mysql = null;
             return $client;
+        }
+        $init = isset($options[PDO::MYSQL_ATTR_INIT_COMMAND]) ? $options[PDO::MYSQL_ATTR_INIT_COMMAND] : null;
+        if (is_string($init) && $init !== '') {
+            $client->attrs[PDO::MYSQL_ATTR_INIT_COMMAND] = $init;
+            if ($client->query($init) === null) {
+                $client->captureOn($mysql);
+                $ffi->mysql_close($mysql);
+                $client->mysql = null;
+                return $client;
+            }
         }
         $client->einfo->clear();
         if ($client->persistent) {
@@ -298,6 +312,9 @@ final class MysqlClient
             return null;
         }
         $this->einfo->clear();
+        if (isset($loaded['result']) && $loaded['result'] !== null && !\FFI::isNull($loaded['result'])) {
+            return MysqlStatement::streaming($this, $loaded['result'], $loaded['columns'], $loaded['affected']);
+        }
         return MysqlStatement::buffered($this, $loaded['columns'], $loaded['rows'], $loaded['affected']);
     }
 
@@ -402,8 +419,22 @@ final class MysqlClient
 
     public function setTimeout($seconds)
     {
-        unset($seconds);
-        return $this->connected();
+        if (!$this->connected()) {
+            return false;
+        }
+        $seconds = (int) $seconds;
+        if ($seconds < 0) {
+            return false;
+        }
+        $ffi = MysqlLibrary::ffi();
+        $timeout = $ffi->new('unsigned int');
+        $timeout->cdata = $seconds;
+        return $ffi->mysql_options($this->mysql, 0, \FFI::cast('const void*', \FFI::addr($timeout))) === 0;
+    }
+
+    public function bufferedQueries()
+    {
+        return !isset($this->attrs[PDO::MYSQL_ATTR_USE_BUFFERED_QUERY]) || $this->attrs[PDO::MYSQL_ATTR_USE_BUFFERED_QUERY];
     }
 
     /**
@@ -498,7 +529,16 @@ final class MysqlClient
             $this->capture();
             return null;
         }
-        return $this->readResult();
+        $loaded = $this->readResult();
+        if ($loaded === null) {
+            return null;
+        }
+        if (isset($loaded['result']) && $loaded['result'] !== null && !\FFI::isNull($loaded['result'])) {
+            $loaded['rows'] = $this->readRows($loaded['result'], count($loaded['columns']));
+            MysqlLibrary::ffi()->mysql_free_result($loaded['result']);
+            $loaded['result'] = null;
+        }
+        return $loaded;
     }
 
     public function adopt(OdbcError $error)
@@ -522,7 +562,7 @@ final class MysqlClient
     }
 
     /**
-     * @return array{columns:array,rows:array,affected:int}|null
+     * @return array{columns:array,rows:array,affected:int,result:\FFI\CData|null}|null
      */
     private function readResult()
     {
@@ -532,21 +572,37 @@ final class MysqlClient
                 'columns' => [],
                 'rows' => [],
                 'affected' => $this->affectedCount(),
+                'result' => null,
             ];
         }
-        $result = $ffi->mysql_store_result($this->mysql);
+        if ($this->bufferedQueries()) {
+            $result = $ffi->mysql_store_result($this->mysql);
+            if (\FFI::isNull($result)) {
+                $this->capture();
+                return null;
+            }
+            $columns = $this->describe($result);
+            $rows = $this->readRows($result, count($columns));
+            $affected = $this->affectedCount();
+            $ffi->mysql_free_result($result);
+            return [
+                'columns' => $columns,
+                'rows' => $rows,
+                'affected' => $affected,
+                'result' => null,
+            ];
+        }
+        $result = $ffi->mysql_use_result($this->mysql);
         if (\FFI::isNull($result)) {
             $this->capture();
             return null;
         }
         $columns = $this->describe($result);
-        $rows = $this->readRows($result, count($columns));
-        $affected = $this->affectedCount();
-        $ffi->mysql_free_result($result);
         return [
             'columns' => $columns,
-            'rows' => $rows,
-            'affected' => $affected,
+            'rows' => [],
+            'affected' => $this->affectedCount(),
+            'result' => $result,
         ];
     }
 
@@ -627,11 +683,113 @@ final class MysqlClient
             if ($ffi->mysql_next_result($this->mysql) !== 0) {
                 break;
             }
-            $result = $ffi->mysql_store_result($this->mysql);
+            if ($this->bufferedQueries()) {
+                $result = $ffi->mysql_store_result($this->mysql);
+                if (!\FFI::isNull($result)) {
+                    $ffi->mysql_free_result($result);
+                }
+                continue;
+            }
+            $result = $ffi->mysql_use_result($this->mysql);
             if (!\FFI::isNull($result)) {
-                $ffi->mysql_free_result($result);
+                $this->discardResult($result);
             }
         }
+    }
+
+    /**
+     * @param \FFI\CData $result
+     */
+    private function discardResult($result)
+    {
+        $ffi = MysqlLibrary::ffi();
+        $count = $ffi->mysql_num_fields($result);
+        while (true) {
+            $row = $ffi->mysql_fetch_row($result);
+            if ($row === null || \FFI::isNull($row)) {
+                break;
+            }
+            unset($row);
+        }
+        $ffi->mysql_free_result($result);
+    }
+
+    /**
+     * @param \FFI $ffi
+     * @param \FFI\CData $mysql
+     * @param array<int|string,mixed> $options
+     * @param array<int,mixed> $attrs
+     */
+    private static function applyMysqlConnectOptions($ffi, $mysql, array $options, array &$attrs)
+    {
+        $timeout = 0;
+        if (!empty($options[PDO::ATTR_TIMEOUT])) {
+            $timeout = (int) $options[PDO::ATTR_TIMEOUT];
+        }
+        if ($timeout > 0) {
+            $slot = $ffi->new('unsigned int');
+            $slot->cdata = $timeout;
+            $ffi->mysql_options($mysql, 0, \FFI::cast('const void*', \FFI::addr($slot)));
+        }
+
+        $keys = [
+            PDO::MYSQL_ATTR_SSL_KEY,
+            PDO::MYSQL_ATTR_SSL_CERT,
+            PDO::MYSQL_ATTR_SSL_CA,
+            PDO::MYSQL_ATTR_SSL_CAPATH,
+            PDO::MYSQL_ATTR_SSL_CIPHER,
+        ];
+        $ssl = [];
+        $hasSsl = false;
+        foreach ($keys as $key) {
+            $text = self::mysqlOptionString($options, $key);
+            if ($text !== null) {
+                $attrs[$key] = $text;
+                $hasSsl = true;
+            }
+            $ssl[] = $text;
+        }
+        if ($hasSsl) {
+            $ffi->mysql_ssl_set($mysql, $ssl[0], $ssl[1], $ssl[2], $ssl[3], $ssl[4]);
+        }
+
+        if (array_key_exists(PDO::MYSQL_ATTR_LOCAL_INFILE, $options)) {
+            $enabled = (bool) $options[PDO::MYSQL_ATTR_LOCAL_INFILE];
+            $attrs[PDO::MYSQL_ATTR_LOCAL_INFILE] = $enabled;
+            $flag = $ffi->new('unsigned int');
+            $flag->cdata = $enabled ? 1 : 0;
+            $ffi->mysql_options($mysql, 8, \FFI::cast('const void*', \FFI::addr($flag)));
+        }
+
+        if (array_key_exists(PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT, $options)) {
+            $verify = (bool) $options[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT];
+            $attrs[PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT] = $verify;
+            $flag = $ffi->new('unsigned int');
+            $flag->cdata = $verify ? 1 : 0;
+            $ffi->mysql_options($mysql, 35, \FFI::cast('const void*', \FFI::addr($flag)));
+        }
+
+        $publicKey = self::mysqlOptionString($options, PDO::MYSQL_ATTR_SERVER_PUBLIC_KEY);
+        if ($publicKey !== null) {
+            $attrs[PDO::MYSQL_ATTR_SERVER_PUBLIC_KEY] = $publicKey;
+            $ffi->mysql_options($mysql, 27, $publicKey);
+        }
+    }
+
+    /**
+     * @param array<int|string,mixed> $options
+     * @return string|null
+     */
+    private static function mysqlOptionString(array $options, $key)
+    {
+        if (!array_key_exists($key, $options)) {
+            return null;
+        }
+        $value = $options[$key];
+        if ($value === null || $value === false) {
+            return null;
+        }
+        return is_string($value) ? $value : (string) $value;
     }
 
     private function capture()
@@ -743,6 +901,9 @@ final class MysqlStatement
     /** @var int */
     private $affected = 0;
 
+    /** @var \FFI\CData|null */
+    private $result;
+
     /** @var OdbcError */
     private $einfo;
 
@@ -756,6 +917,20 @@ final class MysqlStatement
         $statement = new self($client);
         $statement->columns = $columns;
         $statement->rows = $rows;
+        $statement->affected = (int) $affected;
+        return $statement;
+    }
+
+    /**
+     * @param \FFI\CData $result
+     * @param array<int,array<string,mixed>> $columns
+     * @return self
+     */
+    public static function streaming(MysqlClient $client, $result, array $columns, $affected)
+    {
+        $statement = new self($client);
+        $statement->result = $result;
+        $statement->columns = $columns;
         $statement->affected = (int) $affected;
         return $statement;
     }
@@ -825,6 +1000,25 @@ final class MysqlStatement
      */
     public function fetch()
     {
+        if ($this->result !== null && !\FFI::isNull($this->result)) {
+            $ffi = MysqlLibrary::ffi();
+            $row = $ffi->mysql_fetch_row($this->result);
+            if ($row === null || \FFI::isNull($row)) {
+                return null;
+            }
+            $lengths = $ffi->mysql_fetch_lengths($this->result);
+            $count = count($this->columns);
+            $values = [];
+            for ($index = 0; $index < $count; $index++) {
+                $cell = $row[$index];
+                if ($cell === null || \FFI::isNull($cell)) {
+                    $values[] = null;
+                    continue;
+                }
+                $values[] = \FFI::string($cell, (int) $lengths[$index]);
+            }
+            return $values;
+        }
         if ($this->index >= count($this->rows)) {
             return null;
         }
@@ -855,6 +1049,9 @@ final class MysqlStatement
         if ($this->columns === []) {
             return $this->affected;
         }
+        if ($this->result !== null && !\FFI::isNull($this->result)) {
+            return 0;
+        }
         return count($this->rows);
     }
 
@@ -881,6 +1078,10 @@ final class MysqlStatement
 
     public function free()
     {
+        if ($this->result !== null && !\FFI::isNull($this->result)) {
+            MysqlLibrary::ffi()->mysql_free_result($this->result);
+            $this->result = null;
+        }
         if ($this->stmt !== null && !\FFI::isNull($this->stmt)) {
             MysqlLibrary::ffi()->mysql_stmt_close($this->stmt);
             $this->stmt = null;

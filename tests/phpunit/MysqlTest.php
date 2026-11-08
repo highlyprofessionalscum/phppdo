@@ -196,6 +196,42 @@ class MysqlTest extends PdoTestCase
         $this->assertSame(['00000', null, null], $pdo->errorInfo());
     }
 
+    public function testInitCommandFromConstructor()
+    {
+        $pdo = $this->mysql(array(
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET @phppdo_init = 42',
+        ));
+        $this->assertSame('42', $pdo->query('SELECT @phppdo_init')->fetchColumn());
+    }
+
+    public function testUnbufferedQuery()
+    {
+        $pdo = $this->mysql(array(
+            PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false,
+        ));
+        $this->assertFalse($pdo->getAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY));
+        $pdo->exec('DROP TABLE IF EXISTS test_mysql_unbuffered');
+        $pdo->exec('CREATE TABLE test_mysql_unbuffered(id INT PRIMARY KEY) ENGINE=InnoDB');
+        $pdo->exec('INSERT INTO test_mysql_unbuffered(id) VALUES (1), (2), (3)');
+        $statement = $pdo->query('SELECT id FROM test_mysql_unbuffered ORDER BY id');
+        $this->assertSame(0, $statement->rowCount());
+        $this->assertSame(1, $statement->fetchColumn());
+        $this->assertSame(2, $statement->fetchColumn());
+        $this->assertSame(3, $statement->fetchColumn());
+        $this->assertFalse($statement->fetch());
+        $pdo->exec('DROP TABLE test_mysql_unbuffered');
+    }
+
+    public function testSslAttributesStoredInConstructor()
+    {
+        $pdo = $this->mysql(array(
+            PDO::MYSQL_ATTR_SSL_CA => '/no/such/ca.pem',
+            PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT => false,
+        ));
+        $this->assertSame('/no/such/ca.pem', $pdo->getAttribute(PDO::MYSQL_ATTR_SSL_CA));
+        $this->assertFalse($pdo->getAttribute(PDO::MYSQL_ATTR_SSL_VERIFY_SERVER_CERT));
+    }
+
     /**
      * @param array<int,mixed> $options
      * @return PDO
