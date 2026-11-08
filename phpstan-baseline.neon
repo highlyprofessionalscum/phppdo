@@ -1,6 +1,31 @@
 parameters:
 	ignoreErrors:
 		-
+			message: "#^Method PhpPdo\\\\AsyncQueryPoll\\:\\:waitMysql\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/AsyncQueryPoll.php
+
+		-
+			message: "#^Method PhpPdo\\\\AsyncQueryPoll\\:\\:waitMysql\\(\\) has parameter \\$timeoutSeconds with no type specified\\.$#"
+			count: 1
+			path: src/AsyncQueryPoll.php
+
+		-
+			message: "#^Method PhpPdo\\\\AsyncQueryPoll\\:\\:waitPgsql\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/AsyncQueryPoll.php
+
+		-
+			message: "#^Method PhpPdo\\\\AsyncQueryPoll\\:\\:waitPgsql\\(\\) has parameter \\$timeoutSeconds with no type specified\\.$#"
+			count: 1
+			path: src/AsyncQueryPoll.php
+
+		-
+			message: "#^Parameter \\#1 \\$read_streams of function stream_select expects TRead of array\\<resource\\>\\|null, array\\<int, int\\> given\\.$#"
+			count: 2
+			path: src/AsyncQueryPoll.php
+
+		-
 			message: "#^Method PhpPdo\\\\DsnParts\\:\\:parse\\(\\) has parameter \\$dsn with no type specified\\.$#"
 			count: 1
 			path: src/DsnParts.php
@@ -146,36 +171,6 @@ parameters:
 			path: src/Flags.php
 
 		-
-			message: "#^Access to an undefined property FFI\\\\CData\\:\\:\\$buffer\\.$#"
-			count: 2
-			path: src/MysqlClient.php
-
-		-
-			message: "#^Access to an undefined property FFI\\\\CData\\:\\:\\$buffer_length\\.$#"
-			count: 2
-			path: src/MysqlClient.php
-
-		-
-			message: "#^Access to an undefined property FFI\\\\CData\\:\\:\\$buffer_type\\.$#"
-			count: 3
-			path: src/MysqlClient.php
-
-		-
-			message: "#^Access to an undefined property FFI\\\\CData\\:\\:\\$is_null\\.$#"
-			count: 1
-			path: src/MysqlClient.php
-
-		-
-			message: "#^Access to an undefined property FFI\\\\CData\\:\\:\\$is_unsigned\\.$#"
-			count: 1
-			path: src/MysqlClient.php
-
-		-
-			message: "#^Access to an undefined property FFI\\\\CData\\:\\:\\$length\\.$#"
-			count: 1
-			path: src/MysqlClient.php
-
-		-
 			message: "#^Call to an undefined method FFI\\:\\:mysql_affected_rows\\(\\)\\.$#"
 			count: 1
 			path: src/MysqlClient.php
@@ -187,7 +182,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method FFI\\:\\:mysql_close\\(\\)\\.$#"
-			count: 4
+			count: 5
 			path: src/MysqlClient.php
 
 		-
@@ -362,7 +357,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_fetch\\(\\)\\.$#"
-			count: 1
+			count: 2
 			path: src/MysqlClient.php
 
 		-
@@ -422,6 +417,11 @@ parameters:
 
 		-
 			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:assumeUtf8\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:autoReconnect\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/MysqlClient.php
 
@@ -517,6 +517,11 @@ parameters:
 
 		-
 			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:drain\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:ensureLive\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/MysqlClient.php
 
@@ -642,7 +647,7 @@ parameters:
 
 		-
 			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:sendQueryAsync\\(\\) should return PhpPdo\\\\MysqlStatement\\|null but returns false\\.$#"
-			count: 2
+			count: 3
 			path: src/MysqlClient.php
 
 		-
@@ -667,6 +672,16 @@ parameters:
 
 		-
 			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:setAssumeUtf8\\(\\) has parameter \\$enabled with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:setAutoReconnect\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:setAutoReconnect\\(\\) has parameter \\$enabled with no type specified\\.$#"
 			count: 1
 			path: src/MysqlClient.php
 
@@ -717,6 +732,11 @@ parameters:
 
 		-
 			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:bindOne\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:bindStmtResultMetadata\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/MysqlClient.php
 
@@ -781,6 +801,11 @@ parameters:
 			path: src/MysqlClient.php
 
 		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:prepareStmtStreaming\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
 			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:streaming\\(\\) has parameter \\$affected with no type specified\\.$#"
 			count: 1
 			path: src/MysqlClient.php
@@ -821,12 +846,22 @@ parameters:
 			path: src/OdbcClient.php
 
 		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:insertId\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
 			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:isHandle\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/OdbcClient.php
 
 		-
 			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:isHandle\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:isSqliteDsn\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/OdbcClient.php
 
@@ -852,6 +887,11 @@ parameters:
 
 		-
 			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:name\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:prefetch\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/OdbcClient.php
 
@@ -897,6 +937,16 @@ parameters:
 
 		-
 			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:setConnectAutoCommit\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:setPrefetch\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:setPrefetch\\(\\) has parameter \\$rows with no type specified\\.$#"
 			count: 1
 			path: src/OdbcClient.php
 
@@ -1056,6 +1106,11 @@ parameters:
 			path: src/OdbcClient.php
 
 		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:autoReconnect\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
 			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:clientVersion\\(\\)\\.$#"
 			count: 1
 			path: src/PDO.php
@@ -1082,11 +1137,6 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:hasAsyncQueryPending\\(\\)\\.$#"
-			count: 1
-			path: src/PDO.php
-
-		-
-			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:insertId\\(\\)\\.$#"
 			count: 2
 			path: src/PDO.php
 
@@ -1132,6 +1182,11 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:serverVersion\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:setAutoReconnect\\(\\)\\.$#"
 			count: 1
 			path: src/PDO.php
 
@@ -1386,7 +1441,7 @@ parameters:
 			path: src/PDO.php
 
 		-
-			message: "#^Strict comparison using \\=\\=\\= between 10\\|int\\<min, \\-1\\>\\|int\\<22, 999\\>\\|int\\<1002, max\\> and 1001 will always evaluate to false\\.$#"
+			message: "#^Strict comparison using \\=\\=\\= between 10\\|int\\<min, \\-1\\>\\|int\\<22, 999\\>\\|int\\<1002, 1999\\>\\|int\\<2001, max\\> and 1001 will always evaluate to false\\.$#"
 			count: 1
 			path: src/PDO.php
 
@@ -1927,7 +1982,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method FFI\\:\\:PQconnectdb\\(\\)\\.$#"
-			count: 1
+			count: 2
 			path: src/PgsqlClient.php
 
 		-
@@ -1967,7 +2022,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method FFI\\:\\:PQfinish\\(\\)\\.$#"
-			count: 2
+			count: 4
 			path: src/PgsqlClient.php
 
 		-
@@ -2077,7 +2132,7 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method FFI\\:\\:PQstatus\\(\\)\\.$#"
-			count: 2
+			count: 3
 			path: src/PgsqlClient.php
 
 		-
@@ -2107,6 +2162,11 @@ parameters:
 
 		-
 			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:assumeUtf8\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:autoReconnect\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/PgsqlClient.php
 
@@ -2211,12 +2271,22 @@ parameters:
 			path: src/PgsqlClient.php
 
 		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:conninfo\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
 			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:consumeInput\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/PgsqlClient.php
 
 		-
 			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:drain\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:ensureLive\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/PgsqlClient.php
 
@@ -2386,6 +2456,16 @@ parameters:
 			path: src/PgsqlClient.php
 
 		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setAutoReconnect\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setAutoReconnect\\(\\) has parameter \\$enabled with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
 			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setConnectAutoCommit\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/PgsqlClient.php
@@ -2507,6 +2587,11 @@ parameters:
 
 		-
 			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^PHPDoc tag @param references unknown parameter\\: \\$parts$#"
 			count: 1
 			path: src/PgsqlClient.php
 

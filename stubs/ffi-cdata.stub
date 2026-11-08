@@ -1,0 +1,18 @@
+<?php
+
+namespace FFI;
+
+/**
+ * @property mixed $cdata
+ * @property mixed $buffer
+ * @property mixed $buffer_type
+ * @property mixed $buffer_length
+ * @property mixed $is_null
+ * @property mixed $length
+ * @property mixed $is_unsigned
+ * @property mixed $name
+ * @property mixed $name_length
+ */
+class CData
+{
+}

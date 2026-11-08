@@ -7,3 +7,5 @@ parameters:
         - src
     bootstrapFiles:
         - phpstan-bootstrap.php
+    stubFiles:
+        - stubs/ffi-cdata.stub
