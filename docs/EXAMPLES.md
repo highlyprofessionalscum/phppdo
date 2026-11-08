@@ -262,6 +262,27 @@ $pdo->flushConnection(); // PQflush — дожать исходящий буфе
 
 ---
 
+## FFI preloading (MySQL / PostgreSQL)
+
+Ускорение старта FFI: один раз сгенерировать заголовки и прописать `ffi.preload` в `php.ini`. Подробно: [PRELOAD.md](PRELOAD.md).
+
+```sh
+php ffi/generate-preload.php
+```
+
+```ini
+ffi.enable=true
+ffi.preload=/path/to/ffi/generated/mysql.h:/path/to/ffi/generated/pgsql.h
+```
+
+После этого обычное подключение без изменений кода:
+
+```php
+$pdo = new PDO('mysql:host=127.0.0.1;dbname=app', 'user', 'pass');
+```
+
+---
+
 ## Сводка по async-методам PDO
 
 | Метод | ODBC | MySQL | PostgreSQL |

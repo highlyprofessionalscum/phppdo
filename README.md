@@ -33,6 +33,8 @@ Composer loads `src/bootstrap.php`. You can require that file yourself instead.
 
 Driver walkthroughs (synchronous and asynchronous queries): [docs/EXAMPLES.md](docs/EXAMPLES.md).
 
+FFI preloading for MySQL and PostgreSQL: [docs/PRELOAD.md](docs/PRELOAD.md).
+
 ## Usage
 
 ```php
@@ -93,29 +95,9 @@ Otherwise each driver loads the first library that `FFI::cdef` accepts:
 
 ### FFI preloading
 
-Parsing the C API with `FFI::cdef()` on every new PHP process is slow. phpPdo can use PHP’s `ffi.preload` so definitions are parsed once at startup and drivers take them through `FFI::scope()`.
+MySQL and PostgreSQL drivers can preload C API definitions at PHP startup (`ffi.preload` + `FFI::scope()`), so each new process avoids a full `FFI::cdef()` parse. Generate machine-specific headers with `php ffi/generate-preload.php` (or `composer run ffi-preload`), list them in `php.ini`, and restart PHP. Without preload, behavior is unchanged.
 
-1. Generate headers that embed the resolved client library path:
-
-```sh
-php ffi/generate-preload.php
-composer run ffi-preload
-```
-
-This writes `ffi/generated/mysql.h` and `ffi/generated/pgsql.h` (git-ignored). The script prints their paths separated by `PATH_SEPARATOR`.
-
-2. Point `php.ini` at those files:
-
-```ini
-ffi.enable=true
-ffi.preload=/path/to/phppdo/ffi/generated/mysql.h:/path/to/phppdo/ffi/generated/pgsql.h
-```
-
-On Windows use `;` between paths instead of `:`.
-
-The source headers live in `ffi/mysql.h` and `ffi/pgsql.h` with `FFI_SCOPE` names `PHPPDO_MYSQL` and `PHPPDO_PGSQL`. If preloading is not configured, drivers fall back to `FFI::cdef()` as before.
-
-The Docker image runs `ffi/generate-preload.php` at build time and enables `ffi.preload` for the test suite.
+Step-by-step examples for Windows (OSPanel), Linux, Docker, and troubleshooting: **[docs/PRELOAD.md](docs/PRELOAD.md)**.
 
 ## Tests
 
