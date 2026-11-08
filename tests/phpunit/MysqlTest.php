@@ -222,6 +222,24 @@ class MysqlTest extends PdoTestCase
         $pdo->exec('DROP TABLE test_mysql_unbuffered');
     }
 
+    public function testUnbufferedNativePrepare()
+    {
+        $pdo = $this->mysql(array(
+            PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => false,
+            PDO::ATTR_EMULATE_PREPARES => false,
+        ));
+        $pdo->exec('DROP TABLE IF EXISTS test_mysql_unbuf_native');
+        $pdo->exec('CREATE TABLE test_mysql_unbuf_native(id INT PRIMARY KEY) ENGINE=InnoDB');
+        $pdo->exec('INSERT INTO test_mysql_unbuf_native(id) VALUES (1), (2), (3)');
+        $statement = $pdo->prepare('SELECT id FROM test_mysql_unbuf_native ORDER BY id');
+        $statement->execute();
+        $this->assertSame(0, $statement->rowCount());
+        $this->assertSame(1, $statement->fetchColumn());
+        $this->assertSame(2, $statement->fetchColumn());
+        $this->assertSame(3, $statement->fetchColumn());
+        $pdo->exec('DROP TABLE test_mysql_unbuf_native');
+    }
+
     public function testSslAttributesStoredInConstructor()
     {
         $pdo = $this->mysql(array(

@@ -92,6 +92,21 @@ final class MysqlClient
     /** @var bool */
     private $asyncQueryPending = false;
 
+    /** @var bool */
+    private $autoReconnect = false;
+
+    /** @var string */
+    private $reconnectDsn = '';
+
+    /** @var string */
+    private $reconnectUser = '';
+
+    /** @var string */
+    private $reconnectPassword = '';
+
+    /** @var array<int|string,mixed> */
+    private $reconnectOptions = [];
+
     /** @var array<int,self> */
     private static $pool = [];
 
@@ -197,10 +212,25 @@ final class MysqlClient
             }
         }
         $client->einfo->clear();
+        $client->reconnectDsn = $dsn;
+        $client->reconnectUser = (string) $user;
+        $client->reconnectPassword = (string) $password;
+        $client->reconnectOptions = $options;
         if ($client->persistent) {
             self::$pool[$key] = $client;
         }
         return $client;
+    }
+
+    public function setAutoReconnect($enabled)
+    {
+        $this->autoReconnect = (bool) $enabled;
+        return true;
+    }
+
+    public function autoReconnect()
+    {
+        return $this->autoReconnect;
     }
 
     public function name()
@@ -239,6 +269,9 @@ final class MysqlClient
      */
     public function prepare($sql)
     {
+        if (!$this->ensureLive()) {
+            return null;
+        }
         if (!$this->connected()) {
             $this->einfo->set('HY000', null, 'connection is closed', 'mysql_stmt_prepare');
             return null;
@@ -264,6 +297,9 @@ final class MysqlClient
      */
     public function sendQueryAsync($sql)
     {
+        if (!$this->ensureLive()) {
+            return false;
+        }
         if (!$this->connected()) {
             $this->einfo->set('HY000', null, 'connection is closed', 'mysql_send_query');
             return false;
@@ -559,6 +595,30 @@ final class MysqlClient
     private function ping()
     {
         return $this->connected() && MysqlLibrary::ffi()->mysql_ping($this->mysql) === 0;
+    }
+
+    private function ensureLive()
+    {
+        if (!$this->autoReconnect || $this->persistent) {
+            return $this->connected();
+        }
+        if ($this->connected() && $this->ping()) {
+            return true;
+        }
+        if ($this->mysql !== null && !\FFI::isNull($this->mysql)) {
+            MysqlLibrary::ffi()->mysql_close($this->mysql);
+            $this->mysql = null;
+        }
+        $fresh = self::connect($this->reconnectDsn, $this->reconnectUser, $this->reconnectPassword, false, $this->reconnectOptions);
+        if (!$fresh->connected()) {
+            $this->einfo->copyFrom($fresh->einfo);
+            return false;
+        }
+        $this->mysql = $fresh->mysql;
+        $this->attrs = $fresh->attrs;
+        $this->autoReconnect = true;
+        $this->einfo->clear();
+        return true;
     }
 
     /**
@@ -904,6 +964,21 @@ final class MysqlStatement
     /** @var \FFI\CData|null */
     private $result;
 
+    /** @var bool */
+    private $stmtStreaming = false;
+
+    /** @var int */
+    private $stmtFieldCount = 0;
+
+    /** @var array<int,\FFI\CData> */
+    private $stmtBuffers = [];
+
+    /** @var array<int,\FFI\CData> */
+    private $stmtNulls = [];
+
+    /** @var array<int,\FFI\CData> */
+    private $stmtLengths = [];
+
     /** @var OdbcError */
     private $einfo;
 
@@ -988,7 +1063,11 @@ final class MysqlStatement
             $this->einfo->clear();
             return true;
         }
-        if (!$this->fetchNativeRows()) {
+        if ($this->client->bufferedQueries()) {
+            if (!$this->fetchNativeRows()) {
+                return false;
+            }
+        } elseif (!$this->prepareStmtStreaming()) {
             return false;
         }
         $this->einfo->clear();
@@ -1000,6 +1079,9 @@ final class MysqlStatement
      */
     public function fetch()
     {
+        if ($this->stmtStreaming && $this->stmt !== null && !\FFI::isNull($this->stmt)) {
+            return $this->fetchStmtStreamingRow();
+        }
         if ($this->result !== null && !\FFI::isNull($this->result)) {
             $ffi = MysqlLibrary::ffi();
             $row = $ffi->mysql_fetch_row($this->result);
@@ -1052,6 +1134,9 @@ final class MysqlStatement
         if ($this->result !== null && !\FFI::isNull($this->result)) {
             return 0;
         }
+        if ($this->stmtStreaming) {
+            return 0;
+        }
         return count($this->rows);
     }
 
@@ -1089,6 +1174,11 @@ final class MysqlStatement
         $this->keepers = [];
         $this->rows = [];
         $this->columns = [];
+        $this->stmtStreaming = false;
+        $this->stmtBuffers = [];
+        $this->stmtNulls = [];
+        $this->stmtLengths = [];
+        $this->stmtFieldCount = 0;
     }
 
     /**
@@ -1143,7 +1233,45 @@ final class MysqlStatement
         $length->cdata = $size;
     }
 
-    private function fetchNativeRows()
+    private function prepareStmtStreaming()
+    {
+        if (!$this->bindStmtResultMetadata()) {
+            return false;
+        }
+        $this->stmtStreaming = true;
+        return true;
+    }
+
+    /**
+     * @return array<int,mixed>|null
+     */
+    private function fetchStmtStreamingRow()
+    {
+        $ffi = MysqlLibrary::ffi();
+        $status = $ffi->mysql_stmt_fetch($this->stmt);
+        if ($status === 100) {
+            return null;
+        }
+        if ($status !== 0 && $status !== 101) {
+            $this->captureStmt();
+            return null;
+        }
+        $values = [];
+        for ($index = 0; $index < $this->stmtFieldCount; $index++) {
+            if (self::byte($this->stmtNulls[$index]->cdata) !== 0) {
+                $values[] = null;
+                continue;
+            }
+            $size = (int) $this->stmtLengths[$index]->cdata;
+            if ($size < 0) {
+                $size = 0;
+            }
+            $values[] = \FFI::string($this->stmtBuffers[$index], $size);
+        }
+        return $values;
+    }
+
+    private function bindStmtResultMetadata()
     {
         $ffi = MysqlLibrary::ffi();
         $meta = $ffi->mysql_stmt_result_metadata($this->stmt);
@@ -1153,9 +1281,10 @@ final class MysqlStatement
         }
         $count = $ffi->mysql_num_fields($meta);
         $this->columns = [];
-        $buffers = [];
-        $nulls = [];
-        $lengths = [];
+        $this->stmtBuffers = [];
+        $this->stmtNulls = [];
+        $this->stmtLengths = [];
+        $this->stmtFieldCount = $count;
         $binds = $ffi->new('MYSQL_BIND[' . $count . ']');
         $this->keepers[] = $binds;
         for ($index = 0; $index < $count; $index++) {
@@ -1187,9 +1316,9 @@ final class MysqlStatement
             $this->keepers[] = $buffer;
             $this->keepers[] = $isNull;
             $this->keepers[] = $length;
-            $buffers[] = $buffer;
-            $nulls[] = $isNull;
-            $lengths[] = $length;
+            $this->stmtBuffers[] = $buffer;
+            $this->stmtNulls[] = $isNull;
+            $this->stmtLengths[] = $length;
             $binds[$index]->buffer = $ffi->cast('void*', $buffer);
             $binds[$index]->buffer_type = 254;
             $binds[$index]->buffer_length = $width;
@@ -1201,10 +1330,20 @@ final class MysqlStatement
             $this->captureStmt();
             return false;
         }
+        return true;
+    }
+
+    private function fetchNativeRows()
+    {
+        if (!$this->bindStmtResultMetadata()) {
+            return false;
+        }
+        $ffi = MysqlLibrary::ffi();
         if ($ffi->mysql_stmt_store_result($this->stmt) !== 0) {
             $this->captureStmt();
             return false;
         }
+        $count = $this->stmtFieldCount;
         while (true) {
             $status = $ffi->mysql_stmt_fetch($this->stmt);
             if ($status === 100) {
@@ -1216,15 +1355,15 @@ final class MysqlStatement
             }
             $values = [];
             for ($index = 0; $index < $count; $index++) {
-                if (self::byte($nulls[$index]->cdata) !== 0) {
+                if (self::byte($this->stmtNulls[$index]->cdata) !== 0) {
                     $values[] = null;
                     continue;
                 }
-                $size = (int) $lengths[$index]->cdata;
+                $size = (int) $this->stmtLengths[$index]->cdata;
                 if ($size < 0) {
                     $size = 0;
                 }
-                $values[] = \FFI::string($buffers[$index], $size);
+                $values[] = \FFI::string($this->stmtBuffers[$index], $size);
             }
             $this->rows[] = $values;
         }

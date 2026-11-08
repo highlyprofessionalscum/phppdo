@@ -123,6 +123,12 @@ final class OdbcClient
     /** @var bool */
     private $assumeUtf8 = false;
 
+    /** @var string */
+    private $dsnRest = '';
+
+    /** @var int */
+    private $prefetchRows = 0;
+
     /** @var OdbcError */
     private $einfo;
 
@@ -143,6 +149,7 @@ final class OdbcClient
     {
         $client = new self();
         $client->persistent = (bool) $persistent;
+        $client->dsnRest = (string) $dsn;
         if (!function_exists('odbc_connect')) {
             $client->einfo->set('IM001', null, 'the PHP odbc extension is not loaded', 'SQLConnect');
             return $client;
@@ -381,6 +388,54 @@ final class OdbcClient
             return odbc_setoption($this->dbc, 1, 113, (int) $seconds);
         });
         return (bool) $ok;
+    }
+
+    /**
+     * SQL_ATTR_ROW_ARRAY_SIZE (ODBC 3).
+     */
+    public function setPrefetch($rows)
+    {
+        $this->prefetchRows = (int) $rows;
+        if (!function_exists('odbc_setoption') || !$this->connected() || $this->prefetchRows < 1) {
+            return $this->prefetchRows >= 0;
+        }
+        list($ok, ) = self::invoke(function () {
+            return odbc_setoption($this->dbc, 1, 27, $this->prefetchRows);
+        });
+        return (bool) $ok;
+    }
+
+    public function prefetch()
+    {
+        return $this->prefetchRows;
+    }
+
+    /**
+     * SQLite ODBC: SELECT last_insert_rowid(). Other drivers: null (IM001).
+     *
+     * @return string|null
+     */
+    public function insertId($name = null)
+    {
+        unset($name);
+        if (!$this->connected() || !$this->isSqliteDsn()) {
+            return null;
+        }
+        $statement = $this->query('SELECT last_insert_rowid()');
+        if ($statement === null) {
+            return null;
+        }
+        $row = $statement->fetch();
+        $statement->free();
+        if (!is_array($row) || !isset($row[0])) {
+            return null;
+        }
+        return (string) $row[0];
+    }
+
+    private function isSqliteDsn()
+    {
+        return stripos($this->dsnRest, 'sqlite') !== false;
     }
 
     /**

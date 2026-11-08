@@ -117,6 +117,9 @@ class PDO
     const PGSQL_TRANSACTION_INERROR = 3;
     const PGSQL_TRANSACTION_UNKNOWN = 4;
 
+    /** Driver-neutral: ping and reconnect before queries when the connection dropped. */
+    const PHPPDO_ATTR_AUTO_RECONNECT = 2000;
+
     /** @var OdbcClient|null */
     private $driver;
 
@@ -230,6 +233,9 @@ class PDO
                 $this->cursorLibrary,
                 $this->persistent
             );
+            if ($this->prefetch > 0 && $this->driver->connected()) {
+                $this->driver->setPrefetch($this->prefetch);
+            }
         }
         if (!$this->driver->connected()) {
             $info = $this->driver->errorInfo();
@@ -402,6 +408,12 @@ class PDO
                     return $this->driver->mysqlAttribute(self::MYSQL_ATTR_LOCAL_INFILE);
                 }
                 return $this->driver !== null && $this->driver->assumeUtf8();
+            case self::PHPPDO_ATTR_AUTO_RECONNECT:
+                if ($this->driverName() !== 'mysql' && $this->driverName() !== 'pgsql') {
+                    $this->fail('IM001', 'driver does not support this attribute');
+                    return null;
+                }
+                return $this->driver->autoReconnect();
             default:
                 if ($this->driverName() === 'pgsql' && (int) $attribute === self::PGSQL_ATTR_AUTOCOMMIT) {
                     return $this->autoCommit;
@@ -447,6 +459,15 @@ class PDO
             $id = $this->driver->insertId($name);
             if ($id === null) {
                 return $this->failDriver();
+            }
+            $this->clearError();
+            return $id;
+        }
+        if ($this->driverName() === 'odbc') {
+            unset($name);
+            $id = $this->driver->insertId();
+            if ($id === null) {
+                return $this->fail('IM001', 'driver does not support lastInsertId()');
             }
             $this->clearError();
             return $id;
@@ -640,6 +661,19 @@ class PDO
     /**
      * @return bool
      */
+    public function hasAsyncQueryPending()
+    {
+        $this->assertOpen();
+        $name = $this->driverName();
+        if ($name !== 'mysql' && $name !== 'pgsql') {
+            return false;
+        }
+        return $this->driver->hasAsyncQueryPending();
+    }
+
+    /**
+     * @return bool
+     */
     public function flushConnection()
     {
         $this->assertOpen();
@@ -730,6 +764,9 @@ class PDO
                 return true;
             case self::ATTR_PREFETCH:
                 $this->prefetch = (int) $value;
+                if ($this->driverName() === 'odbc' && $this->driver !== null) {
+                    return $this->driver->setPrefetch($this->prefetch);
+                }
                 return true;
             case self::ATTR_STATEMENT_CLASS:
                 $resolved = $this->resolveStatementClass($value);
@@ -794,6 +831,11 @@ class PDO
                 }
                 $this->emulatePrepares = (bool) $value;
                 return true;
+            case self::PHPPDO_ATTR_AUTO_RECONNECT:
+                if ($this->driverName() !== 'mysql' && $this->driverName() !== 'pgsql') {
+                    return $this->fail('IM001', 'driver does not support this attribute');
+                }
+                return $this->driver->setAutoReconnect((bool) $value);
             case self::ATTR_PERSISTENT:
                 return $this->fail('HY000', 'PDO::ATTR_PERSISTENT can only be set in the constructor');
             default:

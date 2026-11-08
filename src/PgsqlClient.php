@@ -84,6 +84,12 @@ final class PgsqlClient
     /** @var int */
     private $counter = 0;
 
+    /** @var bool */
+    private $autoReconnect = false;
+
+    /** @var string */
+    private $conninfo = '';
+
     /** @var OdbcError */
     private $einfo;
 
@@ -127,11 +133,23 @@ final class PgsqlClient
             return $client;
         }
         $client->conn = $conn;
+        $client->conninfo = $conninfo;
         $client->einfo->clear();
         if ($client->persistent) {
             self::$pool[$conninfo] = $client;
         }
         return $client;
+    }
+
+    public function setAutoReconnect($enabled)
+    {
+        $this->autoReconnect = (bool) $enabled;
+        return true;
+    }
+
+    public function autoReconnect()
+    {
+        return $this->autoReconnect;
     }
 
     public function name()
@@ -361,6 +379,9 @@ final class PgsqlClient
      */
     public function prepare($sql)
     {
+        if (!$this->ensureLive()) {
+            return null;
+        }
         if (!$this->connected()) {
             $this->einfo->set('HY000', null, 'connection is closed', 'PQprepare');
             return null;
@@ -449,6 +470,9 @@ final class PgsqlClient
 
     public function sendQueryAsync($sql)
     {
+        if (!$this->ensureLive()) {
+            return false;
+        }
         if (!$this->connected()) {
             $this->einfo->set('HY000', null, 'connection is closed', 'PQsendQuery');
             return false;
@@ -837,6 +861,35 @@ final class PgsqlClient
     /**
      * @param array<string,string> $parts
      */
+    private function ensureLive()
+    {
+        if (!$this->autoReconnect || $this->persistent) {
+            return $this->connected();
+        }
+        if ($this->connected()) {
+            return true;
+        }
+        if ($this->conn !== null && !\FFI::isNull($this->conn)) {
+            PgsqlLibrary::ffi()->PQfinish($this->conn);
+            $this->conn = null;
+        }
+        if ($this->conninfo === '') {
+            return false;
+        }
+        $ffi = PgsqlLibrary::ffi();
+        $conn = $ffi->PQconnectdb($this->conninfo);
+        if ($conn === null || \FFI::isNull($conn) || $ffi->PQstatus($conn) !== 0) {
+            $this->captureConn($conn);
+            if ($conn !== null && !\FFI::isNull($conn)) {
+                $ffi->PQfinish($conn);
+            }
+            return false;
+        }
+        $this->conn = $conn;
+        $this->einfo->clear();
+        return true;
+    }
+
     private static function conninfo(array $parts)
     {
         $map = array(
