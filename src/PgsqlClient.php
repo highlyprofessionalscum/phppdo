@@ -76,6 +76,9 @@ final class PgsqlClient
     private $pending = false;
 
     /** @var bool */
+    private $nonBlocking = false;
+
+    /** @var bool */
     private $disablePrepares = false;
 
     /** @var int */
@@ -367,28 +370,121 @@ final class PgsqlClient
         return PgsqlStatement::prepared($this, $name);
     }
 
+    public function setNonBlocking($enable)
+    {
+        if (!$this->connected()) {
+            return false;
+        }
+        $ffi = PgsqlLibrary::ffi();
+        if ($ffi->PQsetnonblocking($this->conn, $enable ? 1 : 0) !== 0) {
+            $this->captureConn($this->conn);
+            return false;
+        }
+        $this->nonBlocking = (bool) $enable;
+        return true;
+    }
+
+    public function consumeInput()
+    {
+        if (!$this->connected()) {
+            $this->einfo->set('HY000', null, 'connection is closed', 'PQconsumeInput');
+            return false;
+        }
+        if (PgsqlLibrary::ffi()->PQconsumeInput($this->conn) !== 1) {
+            $this->captureConn($this->conn);
+            return false;
+        }
+        return true;
+    }
+
+    public function isQueryBusy()
+    {
+        if (!$this->connected()) {
+            return false;
+        }
+        return PgsqlLibrary::ffi()->PQisBusy($this->conn) === 1;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function connectionSocket()
+    {
+        if (!$this->connected()) {
+            return null;
+        }
+        $socket = (int) PgsqlLibrary::ffi()->PQsocket($this->conn);
+        return $socket >= 0 ? $socket : null;
+    }
+
+    public function flushConnection()
+    {
+        if (!$this->connected()) {
+            $this->einfo->set('HY000', null, 'connection is closed', 'PQflush');
+            return false;
+        }
+        $status = (int) PgsqlLibrary::ffi()->PQflush($this->conn);
+        if ($status < 0) {
+            $this->captureConn($this->conn);
+            return false;
+        }
+        return true;
+    }
+
+    public function sendQueryAsync($sql)
+    {
+        if (!$this->connected()) {
+            $this->einfo->set('HY000', null, 'connection is closed', 'PQsendQuery');
+            return false;
+        }
+        $this->drain();
+        if (PgsqlLibrary::ffi()->PQsendQuery($this->conn, (string) $sql) !== 1) {
+            $this->captureConn($this->conn);
+            return false;
+        }
+        $this->pending = true;
+        $this->einfo->clear();
+        return true;
+    }
+
+    /**
+     * @return PgsqlStatement|null
+     */
+    public function receiveQueryResult()
+    {
+        if (!$this->connected()) {
+            $this->einfo->set('HY000', null, 'connection is closed', 'PQgetResult');
+            return null;
+        }
+        if (!$this->pending) {
+            $this->einfo->set('HY000', null, 'no async query is pending', 'PQgetResult');
+            return null;
+        }
+        $loaded = $this->takeResult();
+        if ($loaded === null) {
+            if ($this->pending && $this->nonBlocking) {
+                $this->einfo->clear();
+            }
+            return null;
+        }
+        $this->einfo->clear();
+        return PgsqlStatement::buffered($this, $loaded['columns'], $loaded['rows'], $loaded['affected']);
+    }
+
+    public function hasAsyncQueryPending()
+    {
+        return $this->pending;
+    }
+
     /**
      * @return PgsqlStatement|null
      */
     public function query($sql)
     {
-        if (!$this->connected()) {
-            $this->einfo->set('HY000', null, 'connection is closed', 'PQsendQuery');
+        if (!$this->sendQueryAsync($sql)) {
             return null;
         }
-        $this->drain();
-        if (PgsqlLibrary::ffi()->PQsendQuery($this->conn, (string) $sql) !== 1) {
-            $this->captureConn($this->conn);
-            return null;
-        }
-        $this->pending = true;
-        $loaded = $this->takeResult();
-        if ($loaded === null) {
-            $this->drain();
-            return null;
-        }
-        $this->einfo->clear();
-        return PgsqlStatement::buffered($this, $loaded['columns'], $loaded['rows'], $loaded['affected']);
+        return $this->receiveQueryResult();
     }
 
     /**
@@ -552,7 +648,9 @@ final class PgsqlClient
         $ffi = PgsqlLibrary::ffi();
         $result = $ffi->PQgetResult($this->conn);
         if ($result === null || \FFI::isNull($result)) {
-            $this->pending = false;
+            if (!$this->nonBlocking) {
+                $this->pending = false;
+            }
             return null;
         }
         $status = $ffi->PQresultStatus($result);

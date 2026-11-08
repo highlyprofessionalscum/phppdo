@@ -89,6 +89,9 @@ final class MysqlClient
     /** @var array<int,mixed> */
     private $attrs = [];
 
+    /** @var bool */
+    private $asyncQueryPending = false;
+
     /** @var array<int,self> */
     private static $pool = [];
 
@@ -245,16 +248,49 @@ final class MysqlClient
     /**
      * @return MysqlStatement|null
      */
-    public function query($sql)
+    public function sendQueryAsync($sql)
     {
         if (!$this->connected()) {
-            $this->einfo->set('HY000', null, 'connection is closed', 'mysql_real_query');
-            return null;
+            $this->einfo->set('HY000', null, 'connection is closed', 'mysql_send_query');
+            return false;
         }
         $this->drain();
+        $text = (string) $sql;
         $ffi = MysqlLibrary::ffi();
-        if ($ffi->mysql_real_query($this->mysql, (string) $sql, strlen((string) $sql)) !== 0) {
+        if ($ffi->mysql_send_query($this->mysql, $text, strlen($text)) !== 0) {
             $this->capture();
+            return false;
+        }
+        $this->asyncQueryPending = true;
+        $this->einfo->clear();
+        return true;
+    }
+
+    public function readQueryResult()
+    {
+        if (!$this->connected()) {
+            $this->einfo->set('HY000', null, 'connection is closed', 'mysql_read_query_result');
+            return false;
+        }
+        if (!$this->asyncQueryPending) {
+            return true;
+        }
+        if (MysqlLibrary::ffi()->mysql_read_query_result($this->mysql) !== 0) {
+            $this->asyncQueryPending = false;
+            $this->capture();
+            return false;
+        }
+        $this->asyncQueryPending = false;
+        $this->einfo->clear();
+        return true;
+    }
+
+    /**
+     * @return MysqlStatement|null
+     */
+    public function receiveQueryResult()
+    {
+        if (!$this->readQueryResult()) {
             return null;
         }
         $loaded = $this->readResult();
@@ -263,6 +299,34 @@ final class MysqlClient
         }
         $this->einfo->clear();
         return MysqlStatement::buffered($this, $loaded['columns'], $loaded['rows'], $loaded['affected']);
+    }
+
+    /**
+     * @return int|null
+     */
+    public function connectionSocket()
+    {
+        if (!$this->connected()) {
+            return null;
+        }
+        $socket = (int) MysqlLibrary::ffi()->mysql_get_socket($this->mysql);
+        return $socket >= 0 ? $socket : null;
+    }
+
+    public function hasAsyncQueryPending()
+    {
+        return $this->asyncQueryPending;
+    }
+
+    /**
+     * @return MysqlStatement|null
+     */
+    public function query($sql)
+    {
+        if (!$this->sendQueryAsync($sql)) {
+            return null;
+        }
+        return $this->receiveQueryResult();
     }
 
     /**

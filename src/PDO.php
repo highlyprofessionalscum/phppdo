@@ -501,6 +501,138 @@ class PDO
         return $stmt;
     }
 
+    /**
+     * @return bool
+     */
+    public function sendQueryAsync($statement)
+    {
+        $this->assertOpen();
+        $this->clearError();
+        $name = $this->driverName();
+        if ($name !== 'mysql' && $name !== 'pgsql') {
+            return $this->fail('IM001', 'driver does not support async queries');
+        }
+        if (!$this->driver->sendQueryAsync((string) $statement)) {
+            return $this->failDriver();
+        }
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function readQueryResult()
+    {
+        $this->assertOpen();
+        $this->clearError();
+        if ($this->driverName() !== 'mysql') {
+            return $this->fail('IM001', 'driver does not support this async operation');
+        }
+        if (!$this->driver->readQueryResult()) {
+            return $this->failDriver();
+        }
+        return true;
+    }
+
+    /**
+     * @return PDOStatement|false|null false — результат ещё не готов (pgsql, non-blocking)
+     */
+    public function receiveQueryResult()
+    {
+        $this->assertOpen();
+        $this->clearError();
+        $name = $this->driverName();
+        if ($name !== 'mysql' && $name !== 'pgsql') {
+            return $this->fail('IM001', 'driver does not support async queries');
+        }
+        $executed = $this->driver->receiveQueryResult();
+        if ($executed === null) {
+            if ($this->driver->hasAsyncQueryPending() && $name === 'pgsql') {
+                return false;
+            }
+            return $this->failDriver();
+        }
+        return PDOStatement::fromExecuted(
+            $this,
+            '',
+            $executed,
+            $this->statementClass,
+            $this->statementCtor
+        );
+    }
+
+    /**
+     * @return int|null
+     */
+    public function connectionSocket()
+    {
+        $this->assertOpen();
+        if ($this->driverName() !== 'mysql' && $this->driverName() !== 'pgsql') {
+            return null;
+        }
+        return $this->driver->connectionSocket();
+    }
+
+    /**
+     * @return bool
+     */
+    public function setNonBlocking($enable)
+    {
+        $this->assertOpen();
+        $this->clearError();
+        if ($this->driverName() !== 'pgsql') {
+            return $this->fail('IM001', 'driver does not support non-blocking mode');
+        }
+        if (!$this->driver->setNonBlocking($enable)) {
+            return $this->failDriver();
+        }
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function consumeInput()
+    {
+        $this->assertOpen();
+        $this->clearError();
+        if ($this->driverName() !== 'pgsql') {
+            return $this->fail('IM001', 'driver does not support consumeInput');
+        }
+        if (!$this->driver->consumeInput()) {
+            return $this->failDriver();
+        }
+        return true;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isQueryBusy()
+    {
+        $this->assertOpen();
+        if ($this->driverName() !== 'pgsql') {
+            return false;
+        }
+        return $this->driver->isQueryBusy();
+    }
+
+    /**
+     * @return bool
+     */
+    public function flushConnection()
+    {
+        $this->assertOpen();
+        $this->clearError();
+        if ($this->driverName() !== 'pgsql') {
+            return $this->fail('IM001', 'driver does not support flushConnection');
+        }
+        if (!$this->driver->flushConnection()) {
+            return $this->failDriver();
+        }
+        return true;
+    }
+
     public function quote($string, $type = self::PARAM_STR)
     {
         $this->assertOpen();

@@ -113,6 +113,20 @@ class PgsqlTest extends PdoTestCase
         $this->assertFalse($statement->nextRowset());
     }
 
+    public function testAsyncQuery()
+    {
+        $pdo = $this->pgsql();
+        $this->assertTrue($pdo->sendQueryAsync('SELECT 13 AS n'));
+        $stmt = $pdo->receiveQueryResult();
+        $this->assertInstanceOf(\PhpPdo\PDOStatement::class, $stmt);
+        $this->assertEquals(13, $stmt->fetchColumn());
+        $this->assertFalse($pdo->isQueryBusy());
+        $socket = $pdo->connectionSocket();
+        if ($socket !== null) {
+            $this->assertGreaterThan(0, $socket);
+        }
+    }
+
     public function testConnectionFailureKeepsErrorInfo()
     {
         if (!PgsqlLibrary::available()) {

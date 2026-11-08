@@ -171,6 +171,19 @@ class MysqlTest extends PdoTestCase
         $this->assertFalse($statement->nextRowset());
     }
 
+    public function testAsyncQuery()
+    {
+        $pdo = $this->mysql();
+        $this->assertTrue($pdo->sendQueryAsync('SELECT 12 AS n'));
+        $stmt = $pdo->receiveQueryResult();
+        $this->assertInstanceOf(\PhpPdo\PDOStatement::class, $stmt);
+        $this->assertEquals(12, $stmt->fetchColumn());
+        $socket = $pdo->connectionSocket();
+        if ($socket !== null) {
+            $this->assertGreaterThan(0, $socket);
+        }
+    }
+
     public function testErrorInfoClearsAfterSuccess()
     {
         $pdo = $this->mysql([PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT]);
