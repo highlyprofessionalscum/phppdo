@@ -10,6 +10,9 @@
     "require-dev": {
         "phpunit/phpunit": "^9.6"
     },
+    "scripts": {
+        "ffi-preload": "php ffi/generate-preload.php"
+    },
     "autoload": {
         "psr-4": {
             "PhpPdo\\": "src/"

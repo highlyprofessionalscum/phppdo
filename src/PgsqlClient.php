@@ -8,6 +8,8 @@ namespace PhpPdo;
  */
 final class PgsqlLibrary
 {
+    const FFI_SCOPE = 'PHPPDO_PGSQL';
+
     /** @var \FFI|null */
     private static $ffi;
 
@@ -39,6 +41,11 @@ final class PgsqlLibrary
         if (!extension_loaded('ffi')) {
             throw new \RuntimeException('ext-ffi is not loaded');
         }
+        $scoped = FfiPreload::scope(self::FFI_SCOPE);
+        if ($scoped instanceof \FFI) {
+            self::$ffi = $scoped;
+            return self::$ffi;
+        }
         $last = null;
         foreach (self::candidates() as $path) {
             try {
@@ -49,6 +56,25 @@ final class PgsqlLibrary
             }
         }
         throw $last !== null ? $last : new \RuntimeException('libpq was not found');
+    }
+
+    /**
+     * @return string|null
+     */
+    public static function probeLibrary()
+    {
+        if (!extension_loaded('ffi')) {
+            return null;
+        }
+        foreach (self::candidates() as $path) {
+            try {
+                \FFI::cdef(self::header(), $path);
+                return $path;
+            } catch (\Throwable $exception) {
+                unset($exception);
+            }
+        }
+        return null;
     }
 
     /**
@@ -140,40 +166,7 @@ final class PgsqlLibrary
 
     private static function header()
     {
-        return <<<'C'
-typedef struct pg_conn PGconn;
-typedef struct pg_result PGresult;
-PGconn *PQconnectdb(const char *conninfo);
-void PQfinish(PGconn *conn);
-int PQstatus(const PGconn *conn);
-char *PQerrorMessage(const PGconn *conn);
-int PQsendQuery(PGconn *conn, const char *query);
-PGresult *PQgetResult(PGconn *conn);
-PGresult *PQexec(PGconn *conn, const char *query);
-int PQresultStatus(const PGresult *res);
-char *PQresultErrorMessage(const PGresult *res);
-char *PQresultErrorField(const PGresult *res, int fieldcode);
-void PQclear(PGresult *res);
-int PQntuples(const PGresult *res);
-int PQnfields(const PGresult *res);
-char *PQfname(const PGresult *res, int column_number);
-unsigned int PQftype(const PGresult *res, int column_number);
-int PQfsize(const PGresult *res, int column_number);
-int PQfmod(const PGresult *res, int column_number);
-char *PQgetvalue(const PGresult *res, int row_number, int column_number);
-int PQgetisnull(const PGresult *res, int row_number, int column_number);
-char *PQcmdTuples(PGresult *res);
-int PQbackendPID(const PGconn *conn);
-char *PQparameterStatus(const PGconn *conn, const char *paramName);
-int PQlibVersion(void);
-int PQtransactionStatus(const PGconn *conn);
-size_t PQescapeStringConn(PGconn *conn, char *to, const char *from, size_t length, int *error);
-unsigned char *PQescapeByteaConn(PGconn *conn, const unsigned char *from, size_t from_length, size_t *to_length);
-void PQfreemem(void *ptr);
-PGresult *PQprepare(PGconn *conn, const char *stmtName, const char *query, int nParams, const unsigned int *paramTypes);
-PGresult *PQexecPrepared(PGconn *conn, const char *stmtName, int nParams, char **paramValues, const int *paramLengths, const int *paramFormats, int resultFormat);
-PGresult *PQexecParams(PGconn *conn, const char *command, int nParams, const unsigned int *paramTypes, char **paramValues, const int *paramLengths, const int *paramFormats, int resultFormat);
-C;
+        return FfiPreload::headerCode('ffi/pgsql.h');
     }
 }
 

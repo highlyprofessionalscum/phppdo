@@ -1,0 +1,34 @@
+#define FFI_SCOPE "PHPPDO_PGSQL"
+
+typedef struct pg_conn PGconn;
+typedef struct pg_result PGresult;
+PGconn *PQconnectdb(const char *conninfo);
+void PQfinish(PGconn *conn);
+int PQstatus(const PGconn *conn);
+char *PQerrorMessage(const PGconn *conn);
+int PQsendQuery(PGconn *conn, const char *query);
+PGresult *PQgetResult(PGconn *conn);
+PGresult *PQexec(PGconn *conn, const char *query);
+int PQresultStatus(const PGresult *res);
+char *PQresultErrorMessage(const PGresult *res);
+char *PQresultErrorField(const PGresult *res, int fieldcode);
+void PQclear(PGresult *res);
+int PQntuples(const PGresult *res);
+int PQnfields(const PGresult *res);
+char *PQfname(const PGresult *res, int column_number);
+unsigned int PQftype(const PGresult *res, int column_number);
+int PQfsize(const PGresult *res, int column_number);
+int PQfmod(const PGresult *res, int column_number);
+char *PQgetvalue(const PGresult *res, int row_number, int column_number);
+int PQgetisnull(const PGresult *res, int row_number, int column_number);
+char *PQcmdTuples(PGresult *res);
+int PQbackendPID(const PGconn *conn);
+char *PQparameterStatus(const PGconn *conn, const char *paramName);
+int PQlibVersion(void);
+int PQtransactionStatus(const PGconn *conn);
+size_t PQescapeStringConn(PGconn *conn, char *to, const char *from, size_t length, int *error);
+unsigned char *PQescapeByteaConn(PGconn *conn, const unsigned char *from, size_t from_length, size_t *to_length);
+void PQfreemem(void *ptr);
+PGresult *PQprepare(PGconn *conn, const char *stmtName, const char *query, int nParams, const unsigned int *paramTypes);
+PGresult *PQexecPrepared(PGconn *conn, const char *stmtName, int nParams, char **paramValues, const int *paramLengths, const int *paramFormats, int resultFormat);
+PGresult *PQexecParams(PGconn *conn, const char *command, int nParams, const unsigned int *paramTypes, char **paramValues, const int *paramLengths, const int *paramFormats, int resultFormat);

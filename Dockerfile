@@ -51,6 +51,12 @@ WORKDIR /app
 
 COPY . /app
 
+RUN php ffi/generate-preload.php > /tmp/phppdo-ffi.preload \
+    && printf '%s\n%s\n' \
+        'ffi.enable=true' \
+        "ffi.preload=$(cat /tmp/phppdo-ffi.preload)" \
+        > /usr/local/etc/php/conf.d/99-phppdo-ffi-preload.ini
+
 ENV PDO_ODBC_DSN="odbc:Driver=SQLite3;Database=/tmp/phppdo.sqlite"
 ENV PDO_MYSQL_DSN="mysql:host=127.0.0.1;port=3306;dbname=phppdo;charset=utf8mb4"
 ENV PDO_MYSQL_USER="phppdo"

@@ -89,6 +89,32 @@ Otherwise each driver loads the first library that `FFI::cdef` accepts:
 - Linux: `libmariadb.so.3`, then `libmysqlclient.so.21` and `libmysqlclient.so.18`; `libpq.so.5` on the common multiarch paths
 - Windows: `libmariadb.dll` before `libmysql.dll`, and `libpq.dll`, beside `php.exe`, in sibling OSPanel modules, on `PATH`, and under Program Files
 
+### FFI preloading
+
+Parsing the C API with `FFI::cdef()` on every new PHP process is slow. phpPdo can use PHP’s `ffi.preload` so definitions are parsed once at startup and drivers take them through `FFI::scope()`.
+
+1. Generate headers that embed the resolved client library path:
+
+```sh
+php ffi/generate-preload.php
+composer run ffi-preload
+```
+
+This writes `ffi/generated/mysql.h` and `ffi/generated/pgsql.h` (git-ignored). The script prints their paths separated by `PATH_SEPARATOR`.
+
+2. Point `php.ini` at those files:
+
+```ini
+ffi.enable=true
+ffi.preload=/path/to/phppdo/ffi/generated/mysql.h:/path/to/phppdo/ffi/generated/pgsql.h
+```
+
+On Windows use `;` between paths instead of `:`.
+
+The source headers live in `ffi/mysql.h` and `ffi/pgsql.h` with `FFI_SCOPE` names `PHPPDO_MYSQL` and `PHPPDO_PGSQL`. If preloading is not configured, drivers fall back to `FFI::cdef()` as before.
+
+The Docker image runs `ffi/generate-preload.php` at build time and enables `ffi.preload` for the test suite.
+
 ## Tests
 
 The small runner does not need PHPUnit:
