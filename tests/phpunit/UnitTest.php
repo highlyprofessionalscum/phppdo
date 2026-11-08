@@ -3,6 +3,7 @@
 namespace PhpPdo\Tests;
 
 use PhpPdo\Flags;
+use PhpPdo\Php8FetchFlags;
 use PhpPdo\PDO;
 use PhpPdo\PDOException;
 use PhpPdo\RowFormatter;
@@ -12,6 +13,14 @@ use PHPUnit\Framework\TestCase;
 
 class UnitTest extends TestCase
 {
+    public function testPhp8FetchFlagRoundTrip()
+    {
+        $php74 = PDO::FETCH_ASSOC | PDO::FETCH_GROUP | PDO::FETCH_UNIQUE;
+        $php8 = Php8FetchFlags::toPhp8FetchMode($php74);
+        $this->assertSame(Php8FetchFlags::FETCH_GROUP, Flags::fetchFlags($php8) & Php8FetchFlags::FETCH_GROUP);
+        $this->assertSame($php74, Php8FetchFlags::toPhp74FetchMode($php8));
+    }
+
     public function testPhp74FetchFlags()
     {
         $this->assertSame(65536, PDO::FETCH_GROUP);
