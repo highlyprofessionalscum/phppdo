@@ -2,31 +2,42 @@
 
 All notable changes to this project are documented here. The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
-Versioning targets [Semantic Versioning](https://semver.org/) once `1.0.0` is published. Until then, treat `main` as development.
-
 ## [Unreleased]
 
 ### Added
 
-- MySQL: SSL options and `mysql_ssl_set` before connect; constructor `MYSQL_ATTR_INIT_COMMAND`; unbuffered queries (`MYSQL_ATTR_USE_BUFFERED_QUERY`).
-- PostgreSQL: driver options in constructor; `PGSQL_ATTR_TRANSACTION_STATUS` and `PGSQL_ATTR_AUTOCOMMIT` (driver-specific attribute numbers, same as ext-pdo).
-- Async query API for MySQL and PostgreSQL; ODBC returns **IM001** (by design).
-- FFI preload for MySQL/PostgreSQL (`ffi/generate-preload.php`, [docs/PRELOAD.md](docs/PRELOAD.md)).
-- CI (GitHub Actions): PHPStan level 6 with baseline, `tests/run.php`, Docker build with full PHPUnit.
-- Docs: [COMPATIBILITY](docs/COMPATIBILITY.md) (emulate prepare + IM001 tables), [PHP 8 fetch flags](docs/PHP8.md), [integration notes](docs/INTEGRATION.md) (Laravel 7 / Doctrine).
-- Composer scripts: `test`, `test-phpunit`, `test-docker`, `analyse`, `check`, `ci-local` (`test` + `ffi-preload` + `test-docker`).
-- `PhpPdo\Php8FetchFlags` — reference values for ext-pdo on PHP 8.x.
+- `PhpPdo\AsyncQueryPoll` for socket polling after async sends.
+- `PDO::PHPPDO_ATTR_AUTO_RECONNECT` for MySQL and PostgreSQL (non-persistent).
+- ODBC `lastInsertId()` for SQLite ODBC (`SELECT last_insert_rowid()`).
+- ODBC `ATTR_PREFETCH` mapped to `SQL_ATTR_ROW_ARRAY_SIZE`.
+- MySQL native prepared statements in unbuffered mode (`MYSQL_ATTR_USE_BUFFERED_QUERY`).
+- GitHub Actions job `phpunit` with MySQL/PostgreSQL service containers.
+- PHPStan `stubs/ffi-cdata.stub` for `FFI\CData` properties.
+
+## [1.0.0] - 2026-11-09
+
+### Added
+
+- Userland PDO for PHP 7.4: ODBC, MySQL (FFI), PostgreSQL (FFI).
+- Async query API (MySQL and PostgreSQL).
+- FFI preload tooling and documentation.
+- MySQL pdo_mysql parity: SSL, `INIT_COMMAND`, unbuffered queries.
+- PostgreSQL constructor options and transaction status attribute.
+- CI (PHPStan, `composer check`, Docker integration tests).
+- Documentation: COMPATIBILITY, INTEGRATION, PHP8 fetch flags, EXAMPLES.
+- Composer DX scripts and committed `composer.lock`.
+- `PhpPdo\Php8FetchFlags`.
 
 ### Changed
 
-- Docker image installs PHPUnit via Composer instead of downloading a phar during build.
+- Docker image uses Composer for PHPUnit.
 
 ## [0.1.0] - 2025-11-08
 
 ### Added
 
-- Initial public release: userland `PDO` for PHP 7.4 (ODBC, MySQL FFI, PostgreSQL FFI).
-- PHPUnit suite and Docker-based integration tests.
+- Initial public release.
 
-[Unreleased]: https://github.com/highlyprofessionalscum/phppdo/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/highlyprofessionalscum/phppdo/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/highlyprofessionalscum/phppdo/compare/v0.1.0...v1.0.0
 [0.1.0]: https://github.com/highlyprofessionalscum/phppdo/releases/tag/v0.1.0

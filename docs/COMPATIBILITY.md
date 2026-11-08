@@ -44,7 +44,7 @@ Comparison against PHP 7.4 **ext-pdo** (`pdo_odbc`, `pdo_mysql`, `pdo_pgsql`). T
 
 | API / attribute | ODBC | MySQL | PostgreSQL |
 | --- | --- | --- | --- |
-| `lastInsertId()` | **IM001** | OK | OK |
+| `lastInsertId()` | SQLite ODBC only | OK | OK |
 | `sendQueryAsync` / `receiveQueryResult` | **IM001** | OK | OK |
 | `readQueryResult` | **IM001** | OK | **IM001** |
 | `setNonBlocking` / `consumeInput` / `flushConnection` | **IM001** | **IM001** | OK |

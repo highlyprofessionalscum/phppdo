@@ -260,6 +260,22 @@ $pdo->flushConnection(); // PQflush — дожать исходящий буфе
 | PostgreSQL, non-blocking, ещё не готов | `false` (ошибки нет) |
 | Ошибка SQL / соединения | `false` + `errorInfo()` / исключение |
 
+### `AsyncQueryPoll` (ожидание без busy-loop)
+
+```php
+use PhpPdo\AsyncQueryPoll;
+use PhpPdo\PDO;
+
+$pdo = new PDO($mysqlDsn, $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
+$pdo->sendQueryAsync('SELECT SLEEP(0.1)');
+if (!AsyncQueryPoll::waitMysql($pdo, 10)) {
+    throw new RuntimeException('mysql async timeout');
+}
+$stmt = $pdo->receiveQueryResult();
+```
+
+Для PostgreSQL в non-blocking режиме: `AsyncQueryPoll::waitPgsql($pdo, 10)` после `sendQueryAsync`.
+
 ---
 
 ## FFI preloading (MySQL / PostgreSQL)
