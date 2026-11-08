@@ -91,13 +91,17 @@ final class PgsqlClient
     private static $pool = array();
 
     /**
+     * @param array<int|string,mixed> $options
      * @return self
      */
-    public static function connect($dsn, $user, $password, $persistent)
+    public static function connect($dsn, $user, $password, $persistent, array $options = array())
     {
         $client = new self();
         $client->persistent = (bool) $persistent;
         $client->einfo = new OdbcError();
+        if (!empty($options[PDO::PGSQL_ATTR_DISABLE_PREPARES])) {
+            $client->disablePrepares = true;
+        }
         if (!PgsqlLibrary::available()) {
             $client->einfo->set('IM002', null, 'could not find driver', 'PQconnectdb');
             return $client;
@@ -338,6 +342,18 @@ final class PgsqlClient
             return true;
         }
         return false;
+    }
+
+    public function transactionStatus()
+    {
+        if (!$this->connected()) {
+            return PDO::PGSQL_TRANSACTION_UNKNOWN;
+        }
+        $status = (int) PgsqlLibrary::ffi()->PQtransactionStatus($this->conn);
+        if ($status < PDO::PGSQL_TRANSACTION_IDLE || $status > PDO::PGSQL_TRANSACTION_UNKNOWN) {
+            return PDO::PGSQL_TRANSACTION_UNKNOWN;
+        }
+        return $status;
     }
 
     /**

@@ -15,6 +15,8 @@ class PgsqlTest extends PdoTestCase
     public function testPhp74PgsqlConstants()
     {
         $this->assertSame(1000, PDO::PGSQL_ATTR_DISABLE_PREPARES);
+        $this->assertSame(1001, PDO::PGSQL_ATTR_AUTOCOMMIT);
+        $this->assertSame(1002, PDO::PGSQL_ATTR_TRANSACTION_STATUS);
         $this->assertSame(0, PDO::PGSQL_TRANSACTION_IDLE);
         $this->assertSame(1, PDO::PGSQL_TRANSACTION_ACTIVE);
         $this->assertSame(2, PDO::PGSQL_TRANSACTION_INTRANS);
@@ -79,6 +81,22 @@ class PgsqlTest extends PdoTestCase
         $this->assertTrue($pdo->commit());
         $this->assertSame(2, $pdo->query('SELECT id FROM pdo_pgsql_tx')->fetchColumn());
         $pdo->exec('DROP TABLE pdo_pgsql_tx');
+    }
+
+    public function testTransactionStatusAndConstructorOptions()
+    {
+        $pdo = $this->pgsql();
+        $this->assertSame(PDO::PGSQL_TRANSACTION_IDLE, $pdo->getAttribute(PDO::PGSQL_ATTR_TRANSACTION_STATUS));
+        $this->assertTrue($pdo->getAttribute(PDO::PGSQL_ATTR_AUTOCOMMIT));
+        $this->assertTrue($pdo->setAttribute(PDO::PGSQL_ATTR_AUTOCOMMIT, false));
+        $this->assertFalse($pdo->getAttribute(PDO::ATTR_AUTOCOMMIT));
+        $this->assertTrue($pdo->setAttribute(PDO::PGSQL_ATTR_AUTOCOMMIT, true));
+        $this->assertTrue($pdo->beginTransaction());
+        $this->assertSame(PDO::PGSQL_TRANSACTION_INTRANS, $pdo->getAttribute(PDO::PGSQL_ATTR_TRANSACTION_STATUS));
+        $this->assertTrue($pdo->rollBack());
+
+        $preparedOff = $this->pgsql(array(PDO::PGSQL_ATTR_DISABLE_PREPARES => true));
+        $this->assertTrue($preparedOff->getAttribute(PDO::PGSQL_ATTR_DISABLE_PREPARES));
     }
 
     public function testServerAttributesAndErrors()
