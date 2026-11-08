@@ -8,6 +8,7 @@ require_once __DIR__ . '/SqlLiteral.php';
 require_once __DIR__ . '/RowFormatter.php';
 require_once __DIR__ . '/OdbcClient.php';
 require_once __DIR__ . '/FfiPreload.php';
+require_once __DIR__ . '/DsnParts.php';
 require_once __DIR__ . '/MysqlClient.php';
 require_once __DIR__ . '/PgsqlClient.php';
 require_once __DIR__ . '/PDO.php';

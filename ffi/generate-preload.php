@@ -9,6 +9,7 @@
  */
 
 require_once dirname(__DIR__) . '/src/FfiPreload.php';
+require_once dirname(__DIR__) . '/src/DsnParts.php';
 require_once dirname(__DIR__) . '/src/MysqlClient.php';
 require_once dirname(__DIR__) . '/src/PgsqlClient.php';
 

@@ -10,25 +10,11 @@ namespace PhpPdo;
 final class MysqlLibrary
 {
     const FFI_SCOPE = 'PHPPDO_MYSQL';
-
-    /** @var \FFI|null */
-    private static $ffi;
-
-    /** @var bool */
-    private static $unavailable = false;
+    const HEADER = 'ffi/mysql.h';
 
     public static function available()
     {
-        if (self::$unavailable) {
-            return false;
-        }
-        try {
-            return self::ffi() instanceof \FFI;
-        } catch (\Throwable $exception) {
-            unset($exception);
-            self::$unavailable = true;
-            return false;
-        }
+        return FfiPreload::available(self::FFI_SCOPE, self::HEADER, self::candidates());
     }
 
     /**
@@ -36,27 +22,7 @@ final class MysqlLibrary
      */
     public static function ffi()
     {
-        if (self::$ffi instanceof \FFI) {
-            return self::$ffi;
-        }
-        if (!extension_loaded('ffi')) {
-            throw new \RuntimeException('ext-ffi is not loaded');
-        }
-        $scoped = FfiPreload::scope(self::FFI_SCOPE);
-        if ($scoped instanceof \FFI) {
-            self::$ffi = $scoped;
-            return self::$ffi;
-        }
-        $last = null;
-        foreach (self::candidates() as $path) {
-            try {
-                self::$ffi = \FFI::cdef(self::header(), $path);
-                return self::$ffi;
-            } catch (\Throwable $exception) {
-                $last = $exception;
-            }
-        }
-        throw $last !== null ? $last : new \RuntimeException('libmysqlclient was not found');
+        return FfiPreload::ffi(self::FFI_SCOPE, self::HEADER, self::candidates(), 'libmysqlclient was not found');
     }
 
     /**
@@ -64,18 +30,7 @@ final class MysqlLibrary
      */
     public static function probeLibrary()
     {
-        if (!extension_loaded('ffi')) {
-            return null;
-        }
-        foreach (self::candidates() as $path) {
-            try {
-                \FFI::cdef(self::header(), $path);
-                return $path;
-            } catch (\Throwable $exception) {
-                unset($exception);
-            }
-        }
-        return null;
+        return FfiPreload::probe(self::HEADER, self::candidates());
     }
 
     /**
@@ -89,7 +44,17 @@ final class MysqlLibrary
             $candidates[] = $env;
         }
         if (DIRECTORY_SEPARATOR === '\\') {
-            return array_merge($candidates, self::windowsLibraries());
+            return array_merge($candidates, FfiPreload::windowsDllCandidates(
+                array('MariaDB', 'MySQL'),
+                array(
+                    'C:\\Program Files\\MariaDB*',
+                    'C:\\Program Files\\MySQL\\MySQL Server*',
+                    'C:\\Program Files (x86)\\MariaDB*',
+                    'C:\\Program Files (x86)\\MySQL\\MySQL Server*',
+                ),
+                array('lib', 'bin'),
+                array('libmariadb.dll', 'libmysql.dll')
+            ));
         }
         return array_merge($candidates, [
             '/usr/lib/x86_64-linux-gnu/libmariadb.so.3',
@@ -98,88 +63,6 @@ final class MysqlLibrary
             'libmysqlclient.so.21',
             'libmysqlclient.so.18',
         ]);
-    }
-
-    /**
-     * Полные пути к libmariadb.dll и libmysql.dll. FFI на Windows не ищет их рядом с сервером.
-     *
-     * @return array<int,string>
-     */
-    private static function windowsLibraries()
-    {
-        $names = array('libmariadb.dll', 'libmysql.dll');
-        $dirs = array();
-        $binary = defined('PHP_BINARY') ? dirname(PHP_BINARY) : '';
-        if ($binary !== '') {
-            $dirs[] = $binary;
-            $modules = dirname($binary);
-            if (is_dir($modules)) {
-                $entries = scandir($modules);
-                if (is_array($entries)) {
-                    foreach ($entries as $entry) {
-                        if (stripos($entry, 'MariaDB') === false && stripos($entry, 'MySQL') === false) {
-                            continue;
-                        }
-                        $dirs[] = $modules . DIRECTORY_SEPARATOR . $entry . DIRECTORY_SEPARATOR . 'lib';
-                        $dirs[] = $modules . DIRECTORY_SEPARATOR . $entry . DIRECTORY_SEPARATOR . 'bin';
-                    }
-                }
-            }
-        }
-        $path = getenv('PATH');
-        if (is_string($path) && $path !== '') {
-            foreach (explode(PATH_SEPARATOR, $path) as $dir) {
-                if ($dir !== '') {
-                    $dirs[] = $dir;
-                }
-            }
-        }
-        foreach (array(
-            'C:\\Program Files\\MariaDB*',
-            'C:\\Program Files\\MySQL\\MySQL Server*',
-            'C:\\Program Files (x86)\\MariaDB*',
-            'C:\\Program Files (x86)\\MySQL\\MySQL Server*',
-        ) as $pattern) {
-            $matches = glob($pattern, GLOB_ONLYDIR);
-            if (!is_array($matches)) {
-                continue;
-            }
-            foreach ($matches as $dir) {
-                $dirs[] = $dir . '\\lib';
-                $dirs[] = $dir . '\\bin';
-            }
-        }
-        $found = array();
-        foreach ($dirs as $dir) {
-            foreach ($names as $name) {
-                $file = rtrim($dir, '\\/') . DIRECTORY_SEPARATOR . $name;
-                if (is_file($file)) {
-                    $found[$file] = $file;
-                }
-            }
-        }
-        return array_merge(array_values($found), $names);
-    }
-
-    /**
-     * const char* из FFI уже приходит строкой PHP.
-     *
-     * @param mixed $value
-     */
-    public static function text($value)
-    {
-        if (is_string($value)) {
-            return $value;
-        }
-        if ($value instanceof \FFI\CData) {
-            return \FFI::string($value);
-        }
-        return '';
-    }
-
-    private static function header()
-    {
-        return FfiPreload::headerCode('ffi/mysql.h');
     }
 }
 
@@ -228,7 +111,7 @@ final class MysqlClient
             return $client;
         }
 
-        $parts = self::parseDsn($dsn);
+        $parts = DsnParts::parse($dsn);
         $host = isset($parts['host']) && $parts['host'] !== '' ? $parts['host'] : 'localhost';
         $port = isset($parts['port']) ? (int) $parts['port'] : 3306;
         $db = isset($parts['dbname']) ? $parts['dbname'] : '';
@@ -492,12 +375,12 @@ final class MysqlClient
 
     public function serverVersion()
     {
-        return $this->connected() ? MysqlLibrary::text(MysqlLibrary::ffi()->mysql_get_server_info($this->mysql)) : null;
+        return $this->connected() ? FfiPreload::cString(MysqlLibrary::ffi()->mysql_get_server_info($this->mysql)) : null;
     }
 
     public function serverInfo()
     {
-        return $this->connected() ? MysqlLibrary::text(MysqlLibrary::ffi()->mysql_get_host_info($this->mysql)) : null;
+        return $this->connected() ? FfiPreload::cString(MysqlLibrary::ffi()->mysql_get_host_info($this->mysql)) : null;
     }
 
     public function clientVersion()
@@ -505,7 +388,7 @@ final class MysqlClient
         if (!MysqlLibrary::available()) {
             return null;
         }
-        return MysqlLibrary::text(MysqlLibrary::ffi()->mysql_get_client_info());
+        return FfiPreload::cString(MysqlLibrary::ffi()->mysql_get_client_info());
     }
 
     /**
@@ -567,25 +450,6 @@ final class MysqlClient
     public function setAssumeUtf8($enabled)
     {
         unset($enabled);
-    }
-
-    /**
-     * @return array<string,string>
-     */
-    private static function parseDsn($dsn)
-    {
-        $parts = [];
-        foreach (explode(';', (string) $dsn) as $piece) {
-            if ($piece === '') {
-                continue;
-            }
-            $eq = strpos($piece, '=');
-            if ($eq === false) {
-                continue;
-            }
-            $parts[strtolower(trim(substr($piece, 0, $eq)))] = trim(substr($piece, $eq + 1));
-        }
-        return $parts;
     }
 
     private function ping()
@@ -717,9 +581,9 @@ final class MysqlClient
     private function captureOn($mysql)
     {
         $ffi = MysqlLibrary::ffi();
-        $state = MysqlLibrary::text($ffi->mysql_sqlstate($mysql));
+        $state = FfiPreload::cString($ffi->mysql_sqlstate($mysql));
         $code = (int) $ffi->mysql_errno($mysql);
-        $message = MysqlLibrary::text($ffi->mysql_error($mysql));
+        $message = FfiPreload::cString($ffi->mysql_error($mysql));
         if ($state === '') {
             $state = 'HY000';
         }
@@ -735,9 +599,9 @@ final class MysqlClient
     private function captureStmt($stmt)
     {
         $ffi = MysqlLibrary::ffi();
-        $state = MysqlLibrary::text($ffi->mysql_stmt_sqlstate($stmt));
+        $state = FfiPreload::cString($ffi->mysql_stmt_sqlstate($stmt));
         $code = (int) $ffi->mysql_stmt_errno($stmt);
-        $message = MysqlLibrary::text($ffi->mysql_stmt_error($stmt));
+        $message = FfiPreload::cString($ffi->mysql_stmt_error($stmt));
         if ($state === '') {
             $state = 'HY000';
         }
@@ -1143,9 +1007,9 @@ final class MysqlStatement
     private function captureStmt()
     {
         $ffi = MysqlLibrary::ffi();
-        $state = MysqlLibrary::text($ffi->mysql_stmt_sqlstate($this->stmt));
+        $state = FfiPreload::cString($ffi->mysql_stmt_sqlstate($this->stmt));
         $code = (int) $ffi->mysql_stmt_errno($this->stmt);
-        $message = MysqlLibrary::text($ffi->mysql_stmt_error($this->stmt));
+        $message = FfiPreload::cString($ffi->mysql_stmt_error($this->stmt));
         if ($state === '') {
             $state = 'HY000';
         }

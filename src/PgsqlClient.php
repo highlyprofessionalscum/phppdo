@@ -9,25 +9,11 @@ namespace PhpPdo;
 final class PgsqlLibrary
 {
     const FFI_SCOPE = 'PHPPDO_PGSQL';
-
-    /** @var \FFI|null */
-    private static $ffi;
-
-    /** @var bool */
-    private static $unavailable = false;
+    const HEADER = 'ffi/pgsql.h';
 
     public static function available()
     {
-        if (self::$unavailable) {
-            return false;
-        }
-        try {
-            return self::ffi() instanceof \FFI;
-        } catch (\Throwable $exception) {
-            unset($exception);
-            self::$unavailable = true;
-            return false;
-        }
+        return FfiPreload::available(self::FFI_SCOPE, self::HEADER, self::candidates());
     }
 
     /**
@@ -35,27 +21,7 @@ final class PgsqlLibrary
      */
     public static function ffi()
     {
-        if (self::$ffi instanceof \FFI) {
-            return self::$ffi;
-        }
-        if (!extension_loaded('ffi')) {
-            throw new \RuntimeException('ext-ffi is not loaded');
-        }
-        $scoped = FfiPreload::scope(self::FFI_SCOPE);
-        if ($scoped instanceof \FFI) {
-            self::$ffi = $scoped;
-            return self::$ffi;
-        }
-        $last = null;
-        foreach (self::candidates() as $path) {
-            try {
-                self::$ffi = \FFI::cdef(self::header(), $path);
-                return self::$ffi;
-            } catch (\Throwable $exception) {
-                $last = $exception;
-            }
-        }
-        throw $last !== null ? $last : new \RuntimeException('libpq was not found');
+        return FfiPreload::ffi(self::FFI_SCOPE, self::HEADER, self::candidates(), 'libpq was not found');
     }
 
     /**
@@ -63,35 +29,7 @@ final class PgsqlLibrary
      */
     public static function probeLibrary()
     {
-        if (!extension_loaded('ffi')) {
-            return null;
-        }
-        foreach (self::candidates() as $path) {
-            try {
-                \FFI::cdef(self::header(), $path);
-                return $path;
-            } catch (\Throwable $exception) {
-                unset($exception);
-            }
-        }
-        return null;
-    }
-
-    /**
-     * @param mixed $value
-     */
-    public static function text($value)
-    {
-        if (is_string($value)) {
-            return $value;
-        }
-        if ($value instanceof \FFI\CData) {
-            if (\FFI::isNull($value)) {
-                return '';
-            }
-            return \FFI::string($value);
-        }
-        return '';
+        return FfiPreload::probe(self::HEADER, self::candidates());
     }
 
     /**
@@ -105,68 +43,21 @@ final class PgsqlLibrary
             $candidates[] = $env;
         }
         if (DIRECTORY_SEPARATOR === '\\') {
-            return array_merge($candidates, self::windowsLibraries());
+            return array_merge($candidates, FfiPreload::windowsDllCandidates(
+                array('PostgreSQL', 'pgsql'),
+                array(
+                    'C:\\Program Files\\PostgreSQL\\*\\bin',
+                    'C:\\Program Files (x86)\\PostgreSQL\\*\\bin',
+                ),
+                array(''),
+                array('libpq.dll')
+            ));
         }
         return array_merge($candidates, array(
             '/usr/lib/x86_64-linux-gnu/libpq.so.5',
             '/usr/lib/aarch64-linux-gnu/libpq.so.5',
             'libpq.so.5',
         ));
-    }
-
-    /**
-     * @return array<int,string>
-     */
-    private static function windowsLibraries()
-    {
-        $dirs = array();
-        $binary = defined('PHP_BINARY') ? dirname(PHP_BINARY) : '';
-        if ($binary !== '') {
-            $dirs[] = $binary;
-            $modules = dirname($binary);
-            if (is_dir($modules)) {
-                $entries = scandir($modules);
-                if (is_array($entries)) {
-                    foreach ($entries as $entry) {
-                        if (stripos($entry, 'PostgreSQL') === false && stripos($entry, 'pgsql') === false) {
-                            continue;
-                        }
-                        $dirs[] = $modules . DIRECTORY_SEPARATOR . $entry . DIRECTORY_SEPARATOR . 'bin';
-                        $dirs[] = $modules . DIRECTORY_SEPARATOR . $entry . DIRECTORY_SEPARATOR . 'lib';
-                    }
-                }
-            }
-        }
-        $path = getenv('PATH');
-        if (is_string($path) && $path !== '') {
-            foreach (explode(PATH_SEPARATOR, $path) as $dir) {
-                if ($dir !== '') {
-                    $dirs[] = $dir;
-                }
-            }
-        }
-        foreach (array('C:\\Program Files\\PostgreSQL\\*\\bin', 'C:\\Program Files (x86)\\PostgreSQL\\*\\bin') as $pattern) {
-            $matches = glob($pattern, GLOB_ONLYDIR);
-            if (!is_array($matches)) {
-                continue;
-            }
-            foreach ($matches as $dir) {
-                $dirs[] = $dir;
-            }
-        }
-        $found = array();
-        foreach ($dirs as $dir) {
-            $file = rtrim($dir, '\\/') . DIRECTORY_SEPARATOR . 'libpq.dll';
-            if (is_file($file)) {
-                $found[$file] = $file;
-            }
-        }
-        return array_merge(array_values($found), array('libpq.dll'));
-    }
-
-    private static function header()
-    {
-        return FfiPreload::headerCode('ffi/pgsql.h');
     }
 }
 
@@ -208,7 +99,7 @@ final class PgsqlClient
             $client->einfo->set('IM002', null, 'could not find driver', 'PQconnectdb');
             return $client;
         }
-        $parts = self::parseDsn($dsn);
+        $parts = DsnParts::parse($dsn);
         if ($user !== null && $user !== '') {
             $parts['user'] = (string) $user;
         }
@@ -345,7 +236,7 @@ final class PgsqlClient
             }
             return null;
         }
-        $id = PgsqlLibrary::text($ffi->PQgetvalue($result, 0, 0));
+        $id = FfiPreload::cString($ffi->PQgetvalue($result, 0, 0));
         $ffi->PQclear($result);
         $this->einfo->clear();
         return $id;
@@ -392,7 +283,7 @@ final class PgsqlClient
         if (!$this->connected()) {
             return null;
         }
-        return PgsqlLibrary::text(PgsqlLibrary::ffi()->PQparameterStatus($this->conn, 'server_version'));
+        return FfiPreload::cString(PgsqlLibrary::ffi()->PQparameterStatus($this->conn, 'server_version'));
     }
 
     public function serverInfo()
@@ -402,10 +293,10 @@ final class PgsqlClient
         }
         $ffi = PgsqlLibrary::ffi();
         return 'PID: ' . $ffi->PQbackendPID($this->conn)
-            . '; Client Encoding: ' . PgsqlLibrary::text($ffi->PQparameterStatus($this->conn, 'client_encoding'))
-            . '; Is Superuser: ' . PgsqlLibrary::text($ffi->PQparameterStatus($this->conn, 'is_superuser'))
-            . '; Session Authorization: ' . PgsqlLibrary::text($ffi->PQparameterStatus($this->conn, 'session_authorization'))
-            . '; Date Style: ' . PgsqlLibrary::text($ffi->PQparameterStatus($this->conn, 'DateStyle'));
+            . '; Client Encoding: ' . FfiPreload::cString($ffi->PQparameterStatus($this->conn, 'client_encoding'))
+            . '; Is Superuser: ' . FfiPreload::cString($ffi->PQparameterStatus($this->conn, 'is_superuser'))
+            . '; Session Authorization: ' . FfiPreload::cString($ffi->PQparameterStatus($this->conn, 'session_authorization'))
+            . '; Date Style: ' . FfiPreload::cString($ffi->PQparameterStatus($this->conn, 'DateStyle'));
     }
 
     public function clientVersion()
@@ -693,7 +584,7 @@ final class PgsqlClient
                 $scale = ($modifier - 4) & 65535;
             }
             $columns[] = array(
-                'name' => PgsqlLibrary::text($ffi->PQfname($result, $index)),
+                'name' => FfiPreload::cString($ffi->PQfname($result, $index)),
                 'native_type' => $native,
                 'len' => (int) $ffi->PQfsize($result, $index),
                 'precision' => $modifier,
@@ -710,7 +601,7 @@ final class PgsqlClient
                     $values[] = null;
                     continue;
                 }
-                $values[] = PgsqlLibrary::text($ffi->PQgetvalue($result, $row, $index));
+                $values[] = FfiPreload::cString($ffi->PQgetvalue($result, $row, $index));
             }
             $rows[] = $values;
         }
@@ -723,7 +614,7 @@ final class PgsqlClient
 
     private static function affected($result)
     {
-        $tuples = PgsqlLibrary::text(PgsqlLibrary::ffi()->PQcmdTuples($result));
+        $tuples = FfiPreload::cString(PgsqlLibrary::ffi()->PQcmdTuples($result));
         if ($tuples === '' || !preg_match('/^-?\d+$/', $tuples)) {
             return 0;
         }
@@ -742,18 +633,18 @@ final class PgsqlClient
         if ($result !== null && !\FFI::isNull($result)) {
             $status = (int) $ffi->PQresultStatus($result);
             $code = $status === 0 ? null : $status;
-            $sqlstate = PgsqlLibrary::text($ffi->PQresultErrorField($result, 67));
-            $primary = PgsqlLibrary::text($ffi->PQresultErrorField($result, 77));
+            $sqlstate = FfiPreload::cString($ffi->PQresultErrorField($result, 67));
+            $primary = FfiPreload::cString($ffi->PQresultErrorField($result, 77));
             if ($sqlstate !== '') {
                 $state = $sqlstate;
             }
             if ($primary !== '') {
                 $message = $primary;
             } else {
-                $message = self::trimMessage(PgsqlLibrary::text($ffi->PQresultErrorMessage($result)));
+                $message = self::trimMessage(FfiPreload::cString($ffi->PQresultErrorMessage($result)));
             }
         } elseif ($this->conn !== null) {
-            $message = self::trimMessage(PgsqlLibrary::text($ffi->PQerrorMessage($this->conn)));
+            $message = self::trimMessage(FfiPreload::cString($ffi->PQerrorMessage($this->conn)));
         }
         if ($message === '') {
             $message = 'postgresql error';
@@ -768,7 +659,7 @@ final class PgsqlClient
     {
         $message = 'could not connect';
         if ($conn !== null && !\FFI::isNull($conn)) {
-            $message = self::trimMessage(PgsqlLibrary::text(PgsqlLibrary::ffi()->PQerrorMessage($conn)));
+            $message = self::trimMessage(FfiPreload::cString(PgsqlLibrary::ffi()->PQerrorMessage($conn)));
         }
         if ($message === '') {
             $message = 'could not connect';
@@ -825,25 +716,6 @@ final class PgsqlClient
             return PDO::PARAM_INT;
         }
         return PDO::PARAM_STR;
-    }
-
-    /**
-     * @return array<string,string>
-     */
-    private static function parseDsn($dsn)
-    {
-        $parts = array();
-        foreach (explode(';', (string) $dsn) as $piece) {
-            if ($piece === '') {
-                continue;
-            }
-            $eq = strpos($piece, '=');
-            if ($eq === false) {
-                continue;
-            }
-            $parts[strtolower(trim(substr($piece, 0, $eq)))] = trim(substr($piece, $eq + 1));
-        }
-        return $parts;
     }
 
     /**
