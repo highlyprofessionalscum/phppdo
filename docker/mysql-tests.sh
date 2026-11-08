@@ -71,7 +71,7 @@ if [ "$status" -ne 0 ]; then
     mysqladmin --socket=/run/mysqld/mysqld.sock shutdown || true
     exit "$status"
 fi
-php /usr/local/bin/phpunit
+php vendor/bin/phpunit
 status=$?
 mysqladmin --socket=/run/mysqld/mysqld.sock shutdown || true
 if [ -n "$ver" ]; then

@@ -1,4 +1,6 @@
 /vendor/
+/composer.phar
+/composer-setup.php
 /ffi/generated/
 .phpunit.result.cache
 .phpunit.result.cache

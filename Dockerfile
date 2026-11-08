@@ -47,6 +47,11 @@ RUN apt-get update \
     || apt-get install -y -o Acquire::Retries=6 --no-install-recommends postgresql postgresql-client libpq5 \
     && rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends unzip git \
+    && curl -fsSL https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && rm -rf /var/lib/apt/lists/*
+
 WORKDIR /app
 
 COPY . /app
@@ -65,8 +70,8 @@ ENV PDO_PGSQL_DSN="pgsql:host=127.0.0.1;port=5432;dbname=phppdo"
 ENV PDO_PGSQL_USER="phppdo"
 ENV PDO_PGSQL_PASSWORD="phppdo"
 
-RUN curl -fsSL -o /usr/local/bin/phpunit https://phar.phpunit.de/phpunit-9.6.22.phar \
-    && chmod +x /usr/local/bin/phpunit docker/mysql-tests.sh \
+RUN composer install --no-interaction --no-progress --prefer-dist \
+    && chmod +x docker/mysql-tests.sh \
     && docker/mysql-tests.sh
 
 CMD ["docker/mysql-tests.sh"]

@@ -1,0 +1,2791 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Method PhpPdo\\\\DsnParts\\:\\:parse\\(\\) has parameter \\$dsn with no type specified\\.$#"
+			count: 1
+			path: src/DsnParts.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:available\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:available\\(\\) has parameter \\$headerRelative with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:available\\(\\) has parameter \\$scope with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:cString\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:ffi\\(\\) has parameter \\$headerRelative with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:ffi\\(\\) has parameter \\$notFoundMessage with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:ffi\\(\\) has parameter \\$scope with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:headerCode\\(\\) has parameter \\$relativePath with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:injectLibraryDirective\\(\\) has parameter \\$headerCode with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:injectLibraryDirective\\(\\) has parameter \\$libraryPath with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:moduleHintMatches\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:moduleHintMatches\\(\\) has parameter \\$entry with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:probe\\(\\) has parameter \\$headerRelative with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:scope\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:writePreloadHeader\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:writePreloadHeader\\(\\) has parameter \\$destPath with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:writePreloadHeader\\(\\) has parameter \\$libraryPath with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\FfiPreload\\:\\:writePreloadHeader\\(\\) has parameter \\$sourceRelative with no type specified\\.$#"
+			count: 1
+			path: src/FfiPreload.php
+
+		-
+			message: "#^Method PhpPdo\\\\Flags\\:\\:fetchFlags\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Flags.php
+
+		-
+			message: "#^Method PhpPdo\\\\Flags\\:\\:fetchFlags\\(\\) has parameter \\$mode with no type specified\\.$#"
+			count: 1
+			path: src/Flags.php
+
+		-
+			message: "#^Method PhpPdo\\\\Flags\\:\\:fetchType\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Flags.php
+
+		-
+			message: "#^Method PhpPdo\\\\Flags\\:\\:fetchType\\(\\) has parameter \\$mode with no type specified\\.$#"
+			count: 1
+			path: src/Flags.php
+
+		-
+			message: "#^Method PhpPdo\\\\Flags\\:\\:isGroup\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Flags.php
+
+		-
+			message: "#^Method PhpPdo\\\\Flags\\:\\:isGroup\\(\\) has parameter \\$flags with no type specified\\.$#"
+			count: 1
+			path: src/Flags.php
+
+		-
+			message: "#^Method PhpPdo\\\\Flags\\:\\:isUnique\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Flags.php
+
+		-
+			message: "#^Method PhpPdo\\\\Flags\\:\\:isUnique\\(\\) has parameter \\$flags with no type specified\\.$#"
+			count: 1
+			path: src/Flags.php
+
+		-
+			message: "#^Method PhpPdo\\\\Flags\\:\\:paramBase\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Flags.php
+
+		-
+			message: "#^Method PhpPdo\\\\Flags\\:\\:paramBase\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: src/Flags.php
+
+		-
+			message: "#^Access to an undefined property FFI\\\\CData\\:\\:\\$buffer\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Access to an undefined property FFI\\\\CData\\:\\:\\$buffer_length\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Access to an undefined property FFI\\\\CData\\:\\:\\$buffer_type\\.$#"
+			count: 3
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Access to an undefined property FFI\\\\CData\\:\\:\\$is_null\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Access to an undefined property FFI\\\\CData\\:\\:\\$is_unsigned\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Access to an undefined property FFI\\\\CData\\:\\:\\$length\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_affected_rows\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_autocommit\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_close\\(\\)\\.$#"
+			count: 4
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_commit\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_errno\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_error\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_fetch_field_direct\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_fetch_lengths\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_fetch_row\\(\\)\\.$#"
+			count: 3
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_field_count\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_free_result\\(\\)\\.$#"
+			count: 6
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_get_client_info\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_get_host_info\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_get_server_info\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_get_socket\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_init\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_insert_id\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_more_results\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_next_result\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_num_fields\\(\\)\\.$#"
+			count: 3
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_options\\(\\)\\.$#"
+			count: 5
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_ping\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_read_query_result\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_real_connect\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_real_escape_string\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_rollback\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_send_query\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_set_character_set\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_sqlstate\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_ssl_set\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_affected_rows\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_bind_param\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_bind_result\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_close\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_errno\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_error\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_execute\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_fetch\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_field_count\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_init\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_prepare\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_result_metadata\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_sqlstate\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_stmt_store_result\\(\\)\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_store_result\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:mysql_use_result\\(\\)\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:adopt\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:affectedCount\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:applyMysqlConnectOptions\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:assumeUtf8\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:begin\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:begin\\(\\) has parameter \\$autoCommit with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:bufferedQueries\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:capture\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:captureOn\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:captureStmt\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:clientVersion\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:close\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:close\\(\\) has parameter \\$inTransaction with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:commit\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:commit\\(\\) has parameter \\$autoCommit with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:connect\\(\\) has parameter \\$dsn with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:connect\\(\\) has parameter \\$password with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:connect\\(\\) has parameter \\$persistent with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:connect\\(\\) has parameter \\$user with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:connected\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:describe\\(\\) has parameter \\$result with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:discardResult\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:drain\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:exec\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:hasAsyncQueryPending\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:insertId\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:mysqlAttribute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:mysqlAttribute\\(\\) has parameter \\$attribute with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:mysqlOptionString\\(\\) has parameter \\$key with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:name\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:nextResult\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:pdoType\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:pdoType\\(\\) has parameter \\$native with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:ping\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:prepare\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:query\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:quote\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:quote\\(\\) has parameter \\$default with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:quote\\(\\) has parameter \\$string with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:quote\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:readQueryResult\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:readResult\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:readRows\\(\\) has parameter \\$count with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:readRows\\(\\) has parameter \\$result with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:rollBack\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:rollBack\\(\\) has parameter \\$autoCommit with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:sendQueryAsync\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:sendQueryAsync\\(\\) should return PhpPdo\\\\MysqlStatement\\|null but returns false\\.$#"
+			count: 2
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:sendQueryAsync\\(\\) should return PhpPdo\\\\MysqlStatement\\|null but returns true\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:serverInfo\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:serverVersion\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:setAssumeUtf8\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:setAssumeUtf8\\(\\) has parameter \\$enabled with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:setConnectAutoCommit\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:setConnectAutoCommit\\(\\) has parameter \\$enabled with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:setMysqlAttribute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:setMysqlAttribute\\(\\) has parameter \\$attribute with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:setTimeout\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:setTimeout\\(\\) has parameter \\$seconds with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:typeName\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlClient\\:\\:typeName\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlLibrary\\:\\:available\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:bindOne\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:buffered\\(\\) has parameter \\$affected with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:byte\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:byte\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:captureStmt\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:configure\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:configure\\(\\) has parameter \\$maxColumnLen with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:execute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:fetchNativeRows\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:free\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:nativeName\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:nativeName\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:next\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\MysqlStatement\\:\\:streaming\\(\\) has parameter \\$affected with no type specified\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Property PhpPdo\\\\MysqlStatement\\:\\:\\$keepers is never read, only written\\.$#"
+			count: 1
+			path: src/MysqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:absorb\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:assumeUtf8\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:begin\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:close\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:commit\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:connected\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:isHandle\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:isHandle\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:messageOf\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:messageOf\\(\\) has parameter \\$fallback with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:messageOf\\(\\) has parameter \\$handle with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:messageOf\\(\\) has parameter \\$warning with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:name\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:record\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:record\\(\\) has parameter \\$fallback with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:record\\(\\) has parameter \\$handle with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:record\\(\\) has parameter \\$warning with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:record\\(\\) has parameter \\$what with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:rollBack\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:setAssumeUtf8\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:setAssumeUtf8\\(\\) has parameter \\$enabled with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:setConnectAutoCommit\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:setTimeout\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:stateOf\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcClient\\:\\:stateOf\\(\\) has parameter \\$handle with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcError\\:\\:clear\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcError\\:\\:copyFrom\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcError\\:\\:set\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcError\\:\\:set\\(\\) has parameter \\$message with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcError\\:\\:set\\(\\) has parameter \\$state with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcError\\:\\:set\\(\\) has parameter \\$what with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:configure\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:execute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:free\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:isHandle\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:isHandle\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:messageOf\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:messageOf\\(\\) has parameter \\$fallback with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:messageOf\\(\\) has parameter \\$handle with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:messageOf\\(\\) has parameter \\$warning with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:next\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:pdoType\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:pdoType\\(\\) has parameter \\$native with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:record\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:record\\(\\) has parameter \\$fallback with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:record\\(\\) has parameter \\$handle with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:record\\(\\) has parameter \\$warning with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:record\\(\\) has parameter \\$what with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:stateOf\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\OdbcStatement\\:\\:stateOf\\(\\) has parameter \\$handle with no type specified\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Parameter \\#1 \\$result_id of function odbc_binmode expects int, object\\|resource\\|null given\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Result of function odbc_close \\(void\\) is used\\.$#"
+			count: 1
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between string and null will always evaluate to false\\.$#"
+			count: 2
+			path: src/OdbcClient.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:clientVersion\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:connectionSocket\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:connectionStatus\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:consumeInput\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:flushConnection\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:hasAsyncQueryPending\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:insertId\\(\\)\\.$#"
+			count: 2
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:isQueryBusy\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:mysqlAttribute\\(\\)\\.$#"
+			count: 3
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:pgsqlAttribute\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:quote\\(\\)\\.$#"
+			count: 2
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:readQueryResult\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:receiveQueryResult\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:sendQueryAsync\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:serverInfo\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:serverVersion\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:setMysqlAttribute\\(\\)\\.$#"
+			count: 4
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:setNonBlocking\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:setPgsqlAttribute\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Call to an undefined method PhpPdo\\\\OdbcClient\\:\\:transactionStatus\\(\\)\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:adoptError\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:assertOpen\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:assertQueryFetchArgs\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:beginTransaction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:clearError\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:commit\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:driverName\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:errorCode\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:errorInfo\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:errorMode\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:exec\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:exec\\(\\) has parameter \\$statement with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:fail\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:fail\\(\\) has parameter \\$driverMessage with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:fail\\(\\) has parameter \\$message with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:fail\\(\\) has parameter \\$native with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:fail\\(\\) has parameter \\$state with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:failDriver\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:getAttribute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:getAttribute\\(\\) has parameter \\$attribute with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:getAvailableDrivers\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:inTransaction\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:lastInsertId\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:lastInsertId\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:parseDsn\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:parseDsn\\(\\) has parameter \\$dsn with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:prepare\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:prepare\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:prepare\\(\\) has parameter \\$statement with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:query\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:query\\(\\) has parameter \\$statement with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:quote\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:quote\\(\\) has parameter \\$string with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:quote\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:rollBack\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:sendQueryAsync\\(\\) has parameter \\$statement with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:setAttribute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:setAttribute\\(\\) has parameter \\$attribute with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:setAttribute\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:setNonBlocking\\(\\) has parameter \\$enable with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:throwAlways\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:throwAlways\\(\\) has parameter \\$message with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDO\\:\\:throwAlways\\(\\) has parameter \\$state with no type specified\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Property PhpPdo\\\\PDO\\:\\:\\$driver \\(PhpPdo\\\\OdbcClient\\|null\\) does not accept PhpPdo\\\\MysqlClient\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Property PhpPdo\\\\PDO\\:\\:\\$driver \\(PhpPdo\\\\OdbcClient\\|null\\) does not accept PhpPdo\\\\PgsqlClient\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between 10\\|int\\<min, \\-1\\>\\|int\\<22, 999\\>\\|int\\<1002, max\\> and 1001 will always evaluate to false\\.$#"
+			count: 1
+			path: src/PDO.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOException\\:\\:__construct\\(\\) has parameter \\$errorInfo with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/PDOException.php
+
+		-
+			message: "#^Property PhpPdo\\\\PDOException\\:\\:\\$errorInfo type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/PDOException.php
+
+		-
+			message: "#^Class PhpPdo\\\\PDORow implements generic interface ArrayAccess but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/PDORow.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDORow\\:\\:__get\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDORow.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDORow\\:\\:__get\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/PDORow.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDORow\\:\\:__isset\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/PDORow.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDORow\\:\\:__set\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/PDORow.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDORow\\:\\:__set\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/PDORow.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDORow\\:\\:__unset\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/PDORow.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDORow\\:\\:fromFetched\\(\\) has parameter \\$queryString with no type specified\\.$#"
+			count: 1
+			path: src/PDORow.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDORow\\:\\:refill\\(\\) has parameter \\$queryString with no type specified\\.$#"
+			count: 1
+			path: src/PDORow.php
+
+		-
+			message: "#^Class PhpPdo\\\\PDOStatement implements generic interface IteratorAggregate but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Class PhpPdo\\\\PdoStatementIterator implements generic interface Iterator but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Else branch is unreachable because ternary operator condition is always true\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:acceptResult\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:activeMode\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:assignBound\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindColumn\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindColumn\\(\\) has parameter \\$column with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindColumn\\(\\) has parameter \\$driverOptions with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindColumn\\(\\) has parameter \\$maxLength with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindColumn\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindColumn\\(\\) has parameter \\$var with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindParam\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindParam\\(\\) has parameter \\$driverOptions with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindParam\\(\\) has parameter \\$maxLength with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindParam\\(\\) has parameter \\$parameter with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindParam\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindParam\\(\\) has parameter \\$variable with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindValue\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindValue\\(\\) has parameter \\$parameter with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindValue\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:bindValue\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:boot\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:boot\\(\\) has parameter \\$emulate with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:boot\\(\\) has parameter \\$nativeHandle with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:boot\\(\\) has parameter \\$parsed with no value type specified in iterable type array\\.$#"
+			count: 2
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:boot\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:buildEmulatedSql\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:clearError\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:closeCursor\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:columnCount\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:create\\(\\) has parameter \\$class with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:create\\(\\) has parameter \\$ctorArgs with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:create\\(\\) has parameter \\$emulate with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:create\\(\\) has parameter \\$nativeHandle with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:create\\(\\) has parameter \\$parsed with no value type specified in iterable type array\\.$#"
+			count: 2
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:create\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:current\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:debugDumpParams\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:errorCode\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:errorInfo\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:execute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:execute\\(\\) has parameter \\$params with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fail\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fail\\(\\) has parameter \\$driverMessage with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fail\\(\\) has parameter \\$message with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fail\\(\\) has parameter \\$native with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fail\\(\\) has parameter \\$state with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:failDriver\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fetch\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fetch\\(\\) has parameter \\$cursorOffset with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fetch\\(\\) has parameter \\$cursorOrientation with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fetch\\(\\) has parameter \\$mode with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fetchAll\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fetchAll\\(\\) has parameter \\$mode with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fetchColumn\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fetchColumn\\(\\) has parameter \\$column with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fetchObject\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fetchObject\\(\\) has parameter \\$class with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fetchObject\\(\\) has parameter \\$constructorArgs with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:freeResult\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fromExecuted\\(\\) has parameter \\$class with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fromExecuted\\(\\) has parameter \\$options with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:fromExecuted\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:getAttribute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:getAttribute\\(\\) has parameter \\$attribute with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:getColumnMeta\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:getColumnMeta\\(\\) has parameter \\$column with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:interpretMode\\(\\) has parameter \\$allowCall with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:interpretMode\\(\\) has parameter \\$mode with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:isCursor\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:isCursor\\(\\) has parameter \\$result with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:isList\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:isList\\(\\) has parameter \\$input with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:key\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:materialize\\(\\) has parameter \\$withGroup with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:next\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:nextRowset\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:normalizeName\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:normalizeName\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:readValues\\(\\) has parameter \\$offset with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:readValues\\(\\) has parameter \\$orientation with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:resetIterator\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:rewind\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:rowCount\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:setAttribute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:setAttribute\\(\\) has parameter \\$attribute with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:setAttribute\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:setFetchMode\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:setFetchMode\\(\\) has parameter \\$mode with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:specFor\\(\\) has parameter \\$mode with no type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Method PhpPdo\\\\PDOStatement\\:\\:valid\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Property PhpPdo\\\\PDOStatement\\:\\:\\$parts type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/PDOStatement.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQbackendPID\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQclear\\(\\)\\.$#"
+			count: 13
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQcmdTuples\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQconnectdb\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQconsumeInput\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQerrorMessage\\(\\)\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQescapeByteaConn\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQescapeStringConn\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQexec\\(\\)\\.$#"
+			count: 3
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQexecParams\\(\\)\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQexecPrepared\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQfinish\\(\\)\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQflush\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQfmod\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQfname\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQfreemem\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQfsize\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQftype\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQgetResult\\(\\)\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQgetisnull\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQgetvalue\\(\\)\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQisBusy\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQlibVersion\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQnfields\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQntuples\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQparameterStatus\\(\\)\\.$#"
+			count: 5
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQprepare\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQresultErrorField\\(\\)\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQresultErrorMessage\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQresultStatus\\(\\)\\.$#"
+			count: 7
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQsendQuery\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQsetnonblocking\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQsocket\\(\\)\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQstatus\\(\\)\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Call to an undefined method FFI\\:\\:PQtransactionStatus\\(\\)\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Left side of && is always true\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:adopt\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:affected\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:affected\\(\\) has parameter \\$result with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:assumeUtf8\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:begin\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:begin\\(\\) has parameter \\$autoCommit with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:captureConn\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:captureResult\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:clientVersion\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:close\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:close\\(\\) has parameter \\$inTransaction with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:command\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:command\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:commit\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:commit\\(\\) has parameter \\$autoCommit with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:connValue\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:connValue\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:connect\\(\\) has parameter \\$dsn with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:connect\\(\\) has parameter \\$password with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:connect\\(\\) has parameter \\$persistent with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:connect\\(\\) has parameter \\$user with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:connected\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:connectionStatus\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:conninfo\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:consumeInput\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:drain\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:exec\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:executeParams\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:executeParams\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:executePrepared\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:executePrepared\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:flushConnection\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:hasAsyncQueryPending\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:insertId\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:isQueryBusy\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:materialize\\(\\) has parameter \\$result with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:materialize\\(\\) has parameter \\$status with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:materialize\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:name\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:nextResult\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:pdoType\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:pdoType\\(\\) has parameter \\$native with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:pgsqlAttribute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:pgsqlAttribute\\(\\) has parameter \\$attribute with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:prepare\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:query\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:quote\\(\\) has parameter \\$string with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:quote\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:rollBack\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:rollBack\\(\\) has parameter \\$autoCommit with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:runStatement\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:runStatement\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:runStatement\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:sendQueryAsync\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:sendQueryAsync\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:serverInfo\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:serverVersion\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setAssumeUtf8\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setAssumeUtf8\\(\\) has parameter \\$enabled with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setConnectAutoCommit\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setConnectAutoCommit\\(\\) has parameter \\$enabled with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setNonBlocking\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setNonBlocking\\(\\) has parameter \\$enable with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setPgsqlAttribute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setPgsqlAttribute\\(\\) has parameter \\$attribute with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setPgsqlAttribute\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setTimeout\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:setTimeout\\(\\) has parameter \\$seconds with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:takeResult\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 2
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:transactionStatus\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:trimMessage\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:trimMessage\\(\\) has parameter \\$message with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:typeName\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlClient\\:\\:typeName\\(\\) has parameter \\$oid with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlLibrary\\:\\:available\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlStatement\\:\\:buffered\\(\\) has parameter \\$affected with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlStatement\\:\\:configure\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlStatement\\:\\:configure\\(\\) has parameter \\$maxColumnLen with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlStatement\\:\\:direct\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlStatement\\:\\:execute\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlStatement\\:\\:free\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlStatement\\:\\:next\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\PgsqlStatement\\:\\:prepared\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Negated boolean expression is always false\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: src/PgsqlClient.php
+
+		-
+			message: "#^Method PhpPdo\\\\Php8FetchFlags\\:\\:toPhp74FetchMode\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Php8FetchFlags.php
+
+		-
+			message: "#^Method PhpPdo\\\\Php8FetchFlags\\:\\:toPhp74FetchMode\\(\\) has parameter \\$mode with no type specified\\.$#"
+			count: 1
+			path: src/Php8FetchFlags.php
+
+		-
+			message: "#^Method PhpPdo\\\\Php8FetchFlags\\:\\:toPhp8FetchMode\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/Php8FetchFlags.php
+
+		-
+			message: "#^Method PhpPdo\\\\Php8FetchFlags\\:\\:toPhp8FetchMode\\(\\) has parameter \\$mode with no type specified\\.$#"
+			count: 1
+			path: src/Php8FetchFlags.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:assignProps\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:assignProps\\(\\) has parameter \\$object with no type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:callCtor\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:callCtor\\(\\) has parameter \\$ctor with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:callCtor\\(\\) has parameter \\$object with no type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:castBound\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:fitsInt\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:fitsInt\\(\\) has parameter \\$string with no type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:isBoolType\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:isBoolType\\(\\) has parameter \\$native with no type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:isFloatType\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:isFloatType\\(\\) has parameter \\$native with no type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:isIntType\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:isIntType\\(\\) has parameter \\$native with no type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:isList\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:isList\\(\\) has parameter \\$value with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:names\\(\\) has parameter \\$case with no type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:putNamed\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:putNamed\\(\\) has parameter \\$name with no type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\RowFormatter\\:\\:putNamed\\(\\) has parameter \\$named with no type specified\\.$#"
+			count: 1
+			path: src/RowFormatter.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlLiteral\\:\\:asBool\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/SqlLiteral.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlLiteral\\:\\:asBool\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/SqlLiteral.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlLiteral\\:\\:asString\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/SqlLiteral.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlLiteral\\:\\:asString\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/SqlLiteral.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlLiteral\\:\\:formatFloat\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/SqlLiteral.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlLiteral\\:\\:formatFloat\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/SqlLiteral.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlLiteral\\:\\:render\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/SqlLiteral.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlLiteral\\:\\:render\\(\\) has parameter \\$type with no type specified\\.$#"
+			count: 1
+			path: src/SqlLiteral.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlLiteral\\:\\:render\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: src/SqlLiteral.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyBlockComment\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyBlockComment\\(\\) has parameter \\$index with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyBlockComment\\(\\) has parameter \\$length with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyBlockComment\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyBracket\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyBracket\\(\\) has parameter \\$index with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyBracket\\(\\) has parameter \\$length with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyBracket\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyLineComment\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyLineComment\\(\\) has parameter \\$index with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyLineComment\\(\\) has parameter \\$length with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyLineComment\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyQuoted\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyQuoted\\(\\) has parameter \\$index with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyQuoted\\(\\) has parameter \\$length with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyQuoted\\(\\) has parameter \\$quote with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:copyQuoted\\(\\) has parameter \\$sql with no type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:dollars\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:dollars\\(\\) has parameter \\$parts with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Method PhpPdo\\\\SqlParser\\:\\:parse\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Strict comparison using \\!\\=\\= between '' and '' will always evaluate to false\\.$#"
+			count: 1
+			path: src/SqlParser.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between 'p' and 't' will always evaluate to false\\.$#"
+			count: 1
+			path: src/SqlParser.php

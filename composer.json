@@ -8,10 +8,27 @@
         "ext-odbc": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "^9.6"
+        "phpunit/phpunit": "^9.6",
+        "phpstan/phpstan": "^1.11"
     },
     "scripts": {
-        "ffi-preload": "php ffi/generate-preload.php"
+        "ffi-preload": "php ffi/generate-preload.php",
+        "test": "php tests/run.php",
+        "test-phpunit": "phpunit",
+        "test-docker": [
+            "docker build -t phppdo .",
+            "docker run --rm phppdo"
+        ],
+        "analyse": "phpstan analyse -c phpstan.neon.dist",
+        "check": [
+            "@test",
+            "@analyse"
+        ],
+        "ci-local": [
+            "@test",
+            "@ffi-preload",
+            "@test-docker"
+        ]
     },
     "autoload": {
         "psr-4": {
