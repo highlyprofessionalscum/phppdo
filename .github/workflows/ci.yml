@@ -24,8 +24,72 @@ jobs:
       - name: composer check
         run: composer check --no-interaction
 
+  phpunit:
+    name: PHPUnit (service containers)
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mariadb:10.6
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: phppdo
+          MYSQL_USER: phppdo
+          MYSQL_PASSWORD: phppdo
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping -h 127.0.0.1 -u root -proot"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_USER: phppdo
+          POSTGRES_PASSWORD: phppdo
+          POSTGRES_DB: phppdo
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U phppdo"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.4"
+          extensions: odbc, ffi
+          coverage: none
+
+      - name: ODBC SQLite driver
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsqliteodbc odbcinst
+          SO=$(find /usr -name 'libsqlite3odbc.so' 2>/dev/null | head -n 1)
+          test -n "$SO"
+          printf '[SQLite3]\nDescription=SQLite3 ODBC\nDriver=%s\nUsageCount=1\n' "$SO" | sudo tee /etc/odbcinst.ini
+
+      - name: Install dependencies
+        run: composer install --no-interaction --no-progress --prefer-dist
+
+      - name: composer test-phpunit
+        env:
+          PDO_ODBC_DSN: "odbc:Driver=SQLite3;Database=/tmp/phppdo-ci.sqlite"
+          PDO_MYSQL_DSN: "mysql:host=127.0.0.1;port=3306;dbname=phppdo;charset=utf8mb4"
+          PDO_MYSQL_USER: phppdo
+          PDO_MYSQL_PASSWORD: phppdo
+          PDO_PGSQL_DSN: "pgsql:host=127.0.0.1;port=5432;dbname=phppdo"
+          PDO_PGSQL_USER: phppdo
+          PDO_PGSQL_PASSWORD: phppdo
+        run: |
+          sudo apt-get install -y libmariadb3 libpq5
+          composer test-phpunit --no-interaction
+
   docker:
-    name: Docker image (full PHPUnit)
+    name: Docker image (full integration)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

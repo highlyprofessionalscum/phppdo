@@ -1,5 +1,7 @@
 # phpPdo
 
+[![CI](https://github.com/highlyprofessionalscum/phppdo/actions/workflows/ci.yml/badge.svg)](https://github.com/highlyprofessionalscum/phppdo/actions/workflows/ci.yml)
+
 PDO written in PHP 7.4. It does not use the `pdo` extension.
 
 If `ext-pdo` is not loaded, `PDO`, `PDOStatement`, `PDOException`, and `PDORow` are this library. If it is loaded, the same classes live in the `PhpPdo` namespace and do not replace the built-in ones.
