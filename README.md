@@ -103,6 +103,8 @@ Step-by-step examples for Windows (OSPanel), Linux, Docker, and troubleshooting:
 
 ## Tests
 
+Commit `composer.lock` is kept in the repository so CI and local runs get the same PHPUnit and PHPStan versions. After changing `composer.json`, run `composer update` and commit the updated lock file.
+
 Composer scripts (after `composer install`):
 
 | Script | Action |

@@ -21,11 +21,8 @@ jobs:
       - name: Install dependencies
         run: composer install --no-interaction --no-progress --prefer-dist
 
-      - name: PHPStan
-        run: vendor/bin/phpstan analyse -c phpstan.neon.dist
-
-      - name: tests/run.php
-        run: php tests/run.php
+      - name: composer check
+        run: composer check --no-interaction
 
   docker:
     name: Docker image (full PHPUnit)
