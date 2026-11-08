@@ -35,6 +35,8 @@ Driver walkthroughs (synchronous and asynchronous queries): [docs/EXAMPLES.md](d
 
 FFI preloading for MySQL and PostgreSQL: [docs/PRELOAD.md](docs/PRELOAD.md).
 
+Compatibility with ext-pdo, PHP 8 fetch flags, and framework notes: [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md), [docs/PHP8.md](docs/PHP8.md), [docs/INTEGRATION.md](docs/INTEGRATION.md). Release history: [CHANGELOG.md](CHANGELOG.md).
+
 ## Usage
 
 ```php
@@ -101,18 +103,19 @@ Step-by-step examples for Windows (OSPanel), Linux, Docker, and troubleshooting:
 
 ## Tests
 
-The small runner does not need PHPUnit:
+Composer scripts (after `composer install`):
 
-```sh
-php tests/run.php
-```
+| Script | Action |
+| --- | --- |
+| `composer test` | `php tests/run.php` (no PHPUnit required) |
+| `composer test-phpunit` | Full PHPUnit suite |
+| `composer test-docker` | Build image and run tests inside Docker |
+| `composer analyse` | PHPStan on `src/` |
+| `composer check` | `test` + `analyse` |
+| `composer ci-local` | `test` + `ffi-preload` + `test-docker` |
+| `composer ffi-preload` | Generate `ffi/generated/*.h` for preload |
 
-PHPUnit 9.6 reads `phpunit.xml.dist`:
-
-```sh
-composer install
-vendor/bin/phpunit
-```
+PHPUnit reads `phpunit.xml.dist` via `composer test-phpunit`.
 
 MySQL and PostgreSQL cases are skipped when their DSN is empty.
 
